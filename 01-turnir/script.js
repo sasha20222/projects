@@ -5,3 +5,4 @@ let coins=0;
   if(lvl<5){console.log("Рано, качайся");}
   else if(coins<100){console.log(`Не вистачає ${100 - coins} монет`);}
   else{console.log(`Заходь, ${name}!`);}
+  alert(`Заходь, ${name}!`);
