@@ -13,3 +13,16 @@ display: flex;
   color: #333;
 gap: 20px;
 }
+.rule:hover {
+      transform: scale(1.1);
+      transition: transform 0.3s ease;
+    }
+.rule:hover {
+      transform: scale(1.1);
+      transition: transform 0.3s ease;
+    }
+.rule:hover {
+      transform: scale(1.1);
+      transition: transform 0.3s ease;
+    }
+  

@@ -6,3 +6,4 @@ let coins=0;
   else if(coins<100){console.log(`Не вистачає ${100 - coins} монет`);}
   else{console.log(`Заходь, ${name}!`);}
   alert(`Заходь, ${name}!`);
+  
