@@ -1,1 +1,1 @@
-button{gap: 10px; display: flex; padding: 10px;} button:hover{background-color: #45a049;transition: background-color 0.3s ease;}
+button{gap: 10px; display: flex; padding: 10px;transition: background-color 0.3s ease;} button:hover{background-color: #45a049;}
