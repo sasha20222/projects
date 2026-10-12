@@ -6,7 +6,7 @@ if(hp >= 0){
 }
 }
 function heal(){
-if(hp < 100){
+if(hp <= 100){
     hp +=20;
     console.log(`Аптечка! HP: ${hp}.`);
 }
