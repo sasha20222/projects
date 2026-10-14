@@ -1,28 +1,27 @@
 body {
-background: linear-gradient(135deg, #fff5f5 0%, #f0f4ff 50%, #e8fbf5 100%);
+  background: linear-gradient(135deg, #fff5f5 0%, #f0f4ff 50%, #e8fbf5 100%);
   border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(163, 177, 198, 0.2);
   padding: 25px;
   max-width: 600px;
   margin: 50px auto;
-display: flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   color: #333;
-gap: 20px;
+  gap: 20px;
 }
 .rule:hover {
-      transform: scale(1.1);
-      transition: transform 0.3s ease;
-    }
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
 .rule:hover {
-      transform: scale(1.1);
-      transition: transform 0.3s ease;
-    }
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
 .rule:hover {
-      transform: scale(1.1);
-      transition: transform 0.3s ease;
-    }
-  
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
