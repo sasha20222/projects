@@ -1,5 +1,8 @@
 let gold = 100;
 function finalPrice(price) {
+  if (price >= 50) {
+    return price - 10;
+  }
   return price;
 }
 
