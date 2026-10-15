@@ -2,11 +2,15 @@ let gold = 100;
 function finalPrice(price) {
   return price;
 }
+if (price >= 50) {
+  return price - 10;
+}
+
 function buy(price) {
   let cost = finalPrice(price >= 50 ? price - 10 : price);
   if (gold >= 50) {
     gold -= 10;
-    console.log(`Куплено за ${cost} ! Золото: ${gold}`);
+    console.log(`Куплено за ${cost}! Золото: ${gold}`);
   } else {
     console.log(`Бракує ${cost - gold}`);
   }
