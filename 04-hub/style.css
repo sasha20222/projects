@@ -40,6 +40,12 @@ h2 {
 }
 .nav {
   display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 16px;
+  background-color: black;
+  border-radius: 12px;
 }
 .card img {
   width: 100px;
