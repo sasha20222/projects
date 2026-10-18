@@ -1,11 +1,10 @@
+let hp = 100;
+let attack = 20;
 function damage(hp, attack) {
-  const newHp = hp - attack;
-  if (newHp < 0) {
+  hp -= attack;
+  if (hp <= 0) {
     return 0;
+  } else {
+    return hp;
   }
-  return newHp;
 }
-
-let heroHp = 100;
-heroHp = damage(heroHp, 30);
-console.log(`HP: ${heroHp}`);

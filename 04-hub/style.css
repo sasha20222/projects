@@ -1,0 +1,59 @@
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background-color: black;
+  border-radius: 12px;
+  gap: 16px;
+}
+.logo {
+  width: 60px;
+  height: 45px;
+}
+.cards {
+  display: flex;
+  gap: 12px;
+
+  font-weight: bold;
+  flex-wrap: wrap;
+}
+h1 {
+  text-align: center;
+}
+h2 {
+  text-align: center;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 2px solid #16a34a;
+  border-radius: 12px;
+  width: 150px;
+  padding: 12px;
+}
+.nav a {
+  color: white;
+}
+.card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+}
+.button {
+  color: white;
+  background-color: #16a34a;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.button:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
