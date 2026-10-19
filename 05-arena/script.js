@@ -9,9 +9,13 @@ function banseco(hp, sila) {
   return hp - sila;
 }
 let sila = 900;
-function hit(myLvl) {
-  bansec = banseco(bansec, upgrade(myLvl));
-  alert(`Удар! HP: ${bansec}`);
+function hit() {
+  bansec = damage(bansec, power(myLvl));
+  if (bansec === 0) {
+    alert("Перемога! 🏆");
+  } else {
+    alert(`юра: ${bansec} HP`);
+  }
 }
 let myLvl = 1;
 function levelUp() {
