@@ -9,6 +9,9 @@ function play(need) {
 function levelUp() {
   myLvl = myLvl + 1;
   alert(`Рівень: ${myLvl}`);
+  if (myLvl > 20) {
+    alert("Максимальний рівень!");
+  }
 }
 let likes = 0;
 function like() {
