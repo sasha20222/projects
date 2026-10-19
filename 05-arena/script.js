@@ -3,6 +3,9 @@ function banseco(hp, sila) {
   if (sila >= hp) {
     return 0;
   }
+  if (bansec === 0) {
+    alert("Гравець програв!");
+  }
   return hp - sila;
 }
 let sila = 900;
@@ -27,7 +30,4 @@ function upgrade(level) {
     return 234;
   }
   return 89;
-}
-if (bansec === 0) {
-  alert("Гравець програв!");
 }
