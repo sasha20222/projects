@@ -7,7 +7,7 @@ function banseco(hp, sila) {
 }
 let sila = 900;
 function hit() {
-  bansec = banseco(bansec, sila);
+  bansec = banseco(bansec, sila(myLvl));
   alert(`Удар! HP: ${bansec}`);
 }
 let myLvl = 1;
@@ -17,17 +17,10 @@ function levelUp() {
   alert(`Рівень підвищено! Поточний рівень: ${myLvl}`);
 }
 function upgrade(level) {
-  if (myLvl >= level && level < 5) {
-    sila += 10;
-    alert(`Потужність збільшено! Поточна потужність: ${sila}`);
-    return;
+  if (myLvl >= 5) {
+    return 234;
   }
-  if (myLvl > level && level >= 5) {
-    sila += 100;
-    upgrade(1);
-    alert(`Потужність збільшено! Поточна потужність: ${sila}`);
-    return;
-  }
-  bansec = banseco(bansec, sila);
-  return upgrade(level - 1);
+  return 235;
 }
+bansec = banseco(bansec, sila);
+return;
