@@ -10,9 +10,10 @@ function levelUp() {
   if (myLvl < 20) {
     myLvl = myLvl + 1;
     alert(`Рівень: ${myLvl}`);
-  } else if (myLvl >= 20) {
-    alert("Максимальний рівень!");
+  }
+  if (myLvl >= 20) {
     myLvl = 20;
+    alert("Максимальний рівень!");
   }
 }
 
