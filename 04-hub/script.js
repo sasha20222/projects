@@ -1,10 +1,12 @@
 let myLvl = 7;
 function play(need) {
-  myLvl >= need
-    ? alert("Запускаю!")
-    : alert(`Треба рівень 10, у тебе ${myLvl}`);
+  if (myLvl >= need) {
+    alert("Запускаю!");
+  } else {
+    alert(`Треба рівень ${need}, у тебе ${myLvl}`);
+  }
 }
-function levelup() {
+function levelUp() {
   myLvl = myLvl + 1;
   alert(`Рівень: ${myLvl}`);
 }
