@@ -10,3 +10,8 @@ function levelUp() {
   myLvl = myLvl + 1;
   alert(`Рівень: ${myLvl}`);
 }
+let likes = 0;
+function like() {
+  likes = likes + 1;
+  alert(`Лайків: ${likes}`);
+}
