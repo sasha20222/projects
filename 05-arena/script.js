@@ -29,5 +29,5 @@ function upgrade(level) {
     return;
   }
   bansec = banseco(bansec, sila);
-  return;
+  return upgrade(level - 1);
 }
