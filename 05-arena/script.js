@@ -17,14 +17,14 @@ function levelUp() {
   alert(`Рівень підвищено! Поточний рівень: ${myLvl}`);
 }
 function upgrade(level) {
-  if (myLvl >= 5) {
+  if (level >= 15) {
+    return 456;
+  }
+  if (level >= 10) {
+    return 345;
+  }
+  if (level >= 5) {
     return 234;
   }
-  return 231;
-}
-if (myLvl >= 10) {
-  return 345;
-}
-if (myLvl >= 15) {
-  return 456;
+  return 89;
 }
