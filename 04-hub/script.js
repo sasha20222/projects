@@ -11,6 +11,7 @@ function levelUp() {
   alert(`Рівень: ${myLvl}`);
   if (myLvl > 20) {
     alert("Максимальний рівень!");
+    myLvl = 20;
   }
 }
 let likes = 0;
