@@ -22,3 +22,9 @@ function upgrade(level) {
   }
   return 231;
 }
+if (myLvl >= 10) {
+  return 345;
+}
+if (myLvl >= 15) {
+  return 456;
+}
