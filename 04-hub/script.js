@@ -7,13 +7,15 @@ function play(need) {
   }
 }
 function levelUp() {
-  myLvl = myLvl + 1;
-  alert(`Рівень: ${myLvl}`);
-  if (myLvl > 20) {
+  if (myLvl < 20) {
+    myLvl = myLvl + 1;
+    alert(`Рівень: ${myLvl}`);
+  } else if (myLvl >= 20) {
     alert("Максимальний рівень!");
     myLvl = 20;
   }
 }
+
 let likes = 0;
 function like() {
   likes = likes + 1;
