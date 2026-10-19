@@ -17,6 +17,7 @@ function hit() {
     alert(`юра: ${bansec} HP`);
   }
 }
+
 let myLvl = 1;
 function levelUp() {
   myLvl++;
