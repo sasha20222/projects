@@ -7,7 +7,7 @@ function banseco(hp, sila) {
 }
 let sila = 900;
 function hit() {
-  bansec = banseco(bansec, sila(myLvl));
+  bansec = banseco(bansec, upgrade(myLvl));
   alert(`Удар! HP: ${bansec}`);
 }
 let myLvl = 1;
@@ -20,7 +20,5 @@ function upgrade(level) {
   if (myLvl >= 5) {
     return 234;
   }
-  return 235;
+  return 231;
 }
-bansec = banseco(bansec, sila);
-return;
