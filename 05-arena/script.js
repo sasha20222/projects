@@ -3,14 +3,12 @@ function banseco(hp, sila) {
   if (sila >= hp) {
     return 0;
   }
-  if (bansec === 0) {
-    alert("Гравець програв!");
-  }
+
   return hp - sila;
 }
 let sila = 900;
 function hit() {
-  bansec = damage(bansec, power(myLvl));
+  bansec = banseco(bansec, upgrade(myLvl));
   if (bansec === 0) {
     alert("Перемога! 🏆");
   } else {
@@ -21,7 +19,7 @@ function hit() {
 let myLvl = 1;
 function levelUp() {
   myLvl++;
-  sila += 100;
+  sila = upgrade(myLvl);
   alert(`Рівень підвищено! Поточний рівень: ${myLvl}`);
 }
 function upgrade(level) {
@@ -35,4 +33,12 @@ function upgrade(level) {
     return 234;
   }
   return 89;
+}
+function strongHit() {
+  bansec = banseco(bansec, upgrade(myLvl) * 2);
+  if (bansec === 0) {
+    alert("Перемога! 🏆");
+  } else {
+    alert(`юра: ${bansec} HP`);
+  }
 }
