@@ -6,7 +6,7 @@ function banseco(hp, sila) {
 
   return hp - sila;
 }
-let sila = 900;
+
 function hit() {
   bansec = banseco(bansec, upgrade(myLvl));
   if (bansec === 0) {
@@ -19,7 +19,6 @@ function hit() {
 let myLvl = 1;
 function levelUp() {
   myLvl++;
-  sila = upgrade(myLvl);
   alert(`Рівень підвищено! Поточний рівень: ${myLvl}`);
 }
 function upgrade(level) {
