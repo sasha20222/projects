@@ -7,7 +7,6 @@ function banseco(hp, sila) {
   if (sila >= hp) {
     return 0;
   }
-  alert(`юра: ${bansec} ${say()}`);
   return hp - sila;
 }
 
@@ -18,6 +17,7 @@ function hit() {
   } else {
     alert(`юра: ${bansec} HP`);
   }
+  alert(`юра: ${bansec} HP. ${say()}`);
 }
 
 let myLvl = 1;
@@ -44,4 +44,9 @@ function strongHit() {
   } else {
     alert(`юра: ${bansec} HP`);
   }
+  alert(`юра: ${bansec} HP. ${say()}`);
+}
+function teach() {
+  moder.push("Тепер я зліше!");
+  alert(`Тепер юра знає ${moder.length} фрази`);
 }
