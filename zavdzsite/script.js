@@ -1,10 +1,10 @@
-let hp = 100;
-let attack = 20;
-function damage(hp, attack) {
-  hp -= attack;
-  if (hp <= 0) {
-    return 0;
-  } else {
-    return hp;
-  }
+let phrases = ["Ярік дяка що сидиш з мною в дс","Юра поганець","Ехіч математик"]
+function say() {
+ 
+
+let i = Math.floor(Math.random() * phrases.length);
+return phrases[i];
 }
+console.log(say());
+console.log(say());
+console.log(say());

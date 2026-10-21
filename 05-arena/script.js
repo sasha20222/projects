@@ -1,9 +1,13 @@
+let moder = ["Дам тобі пермач", "Бійся", "Я тебе забаню"];
+function say() {
+  return moder[Math.floor(Math.random() * moder.length)];
+}
 let bansec = 25000;
 function banseco(hp, sila) {
   if (sila >= hp) {
     return 0;
   }
-
+  alert(`юра: ${bansec} ${say()}`);
   return hp - sila;
 }
 
