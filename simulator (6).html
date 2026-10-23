@@ -14,7 +14,7 @@ h1{font-size:22px;margin:0 0 4px}.sub{color:var(--mu);margin:0 0 14px;font-size:
 .track{height:10px;background:var(--bd);border-radius:6px;overflow:hidden}
 #bar{height:100%;width:0;background:var(--ok);transition:width .4s}
 #note{min-height:22px;margin:8px 0;color:var(--bad);font-size:14px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.grid{display:grid;grid-template-columns:1fr;gap:12px}.steps{display:flex;gap:6px;flex-wrap:wrap}.steps button{padding:6px 10px;font-size:13px}.steps .st-cur{border-color:var(--ac);outline:2px solid var(--ac)}.steps .st-ok{background:var(--ok);color:#fff;border-color:var(--ok)}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px}
 .card h3{margin:0 0 6px;font-size:15px}.card p{margin:0 0 10px}
 input{width:100%;padding:9px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
@@ -25,7 +25,7 @@ button.p{background:var(--ac);color:#fff;border-color:var(--ac)}
 .hint{font-size:13px;color:var(--mu);margin-top:8px}
 table{width:100%;border-collapse:collapse}td{padding:6px;border-bottom:1px solid var(--bd)}
 .pos{color:var(--ok)}.neg{color:var(--bad)}
-#go{margin-top:14px}[hidden]{display:none!important}details{margin:10px 0}summary{cursor:pointer;font-weight:600}.tb{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:3px;font:13px ui-monospace,monospace;margin-top:6px}div.tb span{display:flex;align-items:baseline;gap:8px;padding:4px 8px}div.tb b{font:600 19px/1.1 system-ui,"Segoe UI",Arial,sans-serif;min-width:22px;text-align:center}.codes{display:block;font:600 18px/1.8 ui-monospace,monospace;word-spacing:6px;margin-top:6px}.wide{grid-column:1/-1}.two{display:grid;grid-template-columns:1fr 1.6fr;gap:16px}.tb.bin{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}.tb.scr{max-height:420px;overflow:auto;align-content:start}@media(max-width:640px){.two{grid-template-columns:1fr}}.tb span{padding:2px 6px;border:1px solid var(--bd);border-radius:4px;background:var(--card)}video{width:100%;max-width:320px;border-radius:8px;background:#000;margin-top:8px;transform:scaleX(-1)}#story p{margin:0 0 10px}
+#go{display:none}[hidden]{display:none!important}details{margin:10px 0}summary{cursor:pointer;font-weight:600}.tb{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:3px;font:13px ui-monospace,monospace;margin-top:6px}div.tb span{display:flex;align-items:baseline;gap:8px;padding:4px 8px}div.tb b{font:600 19px/1.1 system-ui,"Segoe UI",Arial,sans-serif;min-width:22px;text-align:center}.codes{display:block;font:600 18px/1.8 ui-monospace,monospace;word-spacing:6px;margin-top:6px}.wide{grid-column:1/-1}.two{display:grid;grid-template-columns:1fr 1.6fr;gap:16px}.tb.bin{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}.tb.scr{max-height:420px;overflow:auto;align-content:start}@media(max-width:640px){.two{grid-template-columns:1fr}}.tb span{padding:2px 6px;border:1px solid var(--bd);border-radius:4px;background:var(--card)}video{width:100%;max-width:320px;border-radius:8px;background:#000;margin-top:8px;transform:scaleX(-1)}#story p{margin:0 0 10px}
 </style></head><body><main>
 <h1>Тиждень школяра</h1>
 <p class="sub">Мета: купити комп’ютер до турніру. Роби домашку — отримуй кишенькові від тата чи мами.</p>
@@ -93,6 +93,7 @@ const GQ=[{q:'Чотирикутник, у якого лише дві сторо
 const FILL=[['пр_вітання','и'],['ж_ття','и'],['д_ректор','и'],['т_плий','е'],['б_реза','е'],['в_сна','е'],['н_бо','е'],['пр_гожий','и']];
 const tf=(b,k,subj)=>{const x=take(b,k);return{subj,kind:'opt',q:'Правда чи ні? '+x.q,opts:['Так','Ні'],ans:x.a,val:'',hint:'Пригадай правило або дату з уроку.'}};
 const seqPick=(i,j)=>{const t=S.tasks[i];t.sel.push(t.items[j]);t.val=t.sel.join(' > ');render()};
+const toggleTb=()=>{S.tb=!S.tb;render()};const go=d=>{S.cur=Math.max(0,Math.min(S.tasks.length-1,S.cur+d));render();window.scrollTo({top:0,behavior:'smooth'})};const isDone=t=>t.kind=='pe'?t.val>=10:t.kind=='seq'?t.sel.length>=t.items.length:!!String(t.val||'').trim();
 const seqReset=i=>{const t=S.tasks[i];t.sel=[];t.val='';render()};
 function histT(){const r=rnd(3);
  if(r==0){const h=take(H,'H');return{subj:'Історія',kind:'opt',q:h.q,opts:shuffle(h.o),ans:h.o[0],val:'',hint:h.h}}
@@ -112,10 +113,10 @@ function geoT(){const r=rnd(6);
  if(r==0){const x=take(GQ,'GQ');return{subj:'Геометрія',kind:'opt',q:x.q,opts:shuffle(x.o),ans:x.o[0],val:'',hint:x.h}}
  if(r==1)return tf(TFG,'TFG','Геометрія');
  const x=geoQ();return{subj:'Геометрія',kind:'num',q:x.q,ans:x.ans,val:'',hint:x.hint}}
-function infT(){const r=rnd(4),T=(q,ans,hint)=>({subj:'Інформатика',kind:'txt',q,ans,val:'',hint});
- if(r==0){const x=take(R,'R'),code=enc(x.t);return T(`Розшифруй коди (cp1251) і відгадай загадку: <span class='codes'>${code}</span>`,x.a,`Перший код ${code.split(' ')[0]} — це «${x.t[0]}». Далі за таблицею: 192 = А, 224 = а, 32 = пробіл.`)}
+function infT(){const r=2,T=(q,ans,hint)=>({subj:'Інформатика',kind:'txt',q,ans,val:'',hint});
+ if(r==0){const x=take(R,'R'),code=enc(x.t);return T(`Кожне число — це літера. Знайди літери в таблиці й відгадай загадку: <span class='codes'>${code}</span>`,x.a,`Перший код ${code.split(' ')[0]} — це «${x.t[0]}». Далі за таблицею: 192 = А, 224 = а, 32 = пробіл.`)}
  if(r==1){const w=pick(['кіт','дім','мама','школа','код','миша']);return T(`Запиши коди літер слова «${w}» через пробіл (cp1251).`,enc(w),`Перша літера «${w[0]}» має код ${enc(w[0])}. Інші знайди в таблиці.`)}
- if(r==2){let k;do{k=192+rnd(64)}while([218,219,221,250,251,253].includes(k));return T(`Яка літера має код ${k} у таблиці cp1251?`,cp(k),k<224?'Великі літери мають коди 192–223.':'Малі літери мають коди 224–255.')}
+ if(r==2){let k;do{k=192+rnd(64)}while([218,219,221,250,251,253].includes(k));return T(`Яка це літера? Код: ${k}`,cp(k),k<224?'Великі літери мають коди 192–223.':'Малі літери мають коди 224–255.')}
  const n=5+rnd(26);return T(`Переведи двійкове число ${n.toString(2)} у десяткову систему.`,String(n),'Розряди справа наліво: 1, 2, 4, 8, 16.')}
 function newRound(){
  
@@ -126,20 +127,20 @@ function newRound(){
  ukrT(),
  infT(),
  {subj:"Фізкультура",kind:"pe",q:"Зроби 10 присідань перед вебкамерою (зараховуються лише глибокі присідання, усією висотою тіла). Увімкни камеру, відкалібруй і присідай.",ans:"",val:0}];
- $("#res").hidden=true;$("#tasks").hidden=false;$("#go").hidden=false;render()}
+ S.cur=0;$("#res").hidden=true;$("#tasks").hidden=false;$("#go").hidden=false;render()}
 function card(t,i){let b="";
  if(t.kind=="opt")b=t.opts.map((o,j)=>`<button class="o ${t.val===o?"sel":""}" onclick="setOpt(${i},${j})">${o}</button>`).join("");
  else if(t.kind=="seq")b=t.items.map((o,j)=>`<button class='o ${t.sel.includes(o)?'sel':''}' ${t.sel.includes(o)?'disabled':''} onclick='seqPick(${i},${j})'>${t.sel.includes(o)?(t.sel.indexOf(o)+1)+'. ':''}${o}</button>`).join('')+`<div class='row'><button onclick='seqReset(${i})'>Скинути порядок</button></div>`;
  else if(t.kind=="pe")b=(cam.on?`<div id="vslot"></div><div class="row"><button onclick="calib()">Калібрувати</button><button onclick="resetPe()">Скинути лічильник</button><button onclick="camStop()">Вимкнути камеру</button></div><div class="hint" id="cst">${cam.msg}</div><b id="pc">Присідання: ${t.val}/10</b>`:`<div class="row"><button class="p" onclick="camStart()">Увімкнути камеру</button></div><b>Присідання: ${t.val}/10</b>${cam.msg?`<div class="hint">Увага: ${cam.msg}</div>`:""}`);
  else b=`<input value="${t.val}" ${t.ai?"disabled":""} oninput="S.tasks[${i}].val=this.value" placeholder="Твоя відповідь">`+
   "";
- if(t.kind=="txt")b=`<div class="two"><div>${b}</div><div><b>Таблиця кодування</b><div id="tbw">${tbHtml()}</div></div></div>`;
+ if(t.kind=="txt")b=`${b}<div class='row'><button onclick='toggleTb()'>${S.tb?'Сховати таблицю кодів':'Показати таблицю кодів'}</button></div>${S.tb?`<div id='tbw' style='margin-top:8px'>${tbHtml()}</div>`:''}`;
  const ai=t.kind=="pe"?"":`<div class="row"><button onclick="aiHint(${i})">ШІ: підказка</button><button onclick="aiAns(${i})">ШІ: відповідь</button></div>`;
  return `<div class="card${t.kind=="txt"?" wide":""}"><h3>${t.subj}${t.ai?" (ШІ)":""}</h3><p>${t.q}</p>${b}${ai}${t.showHint?`<div class="hint">Підказка: ${t.hint}</div>`:""}</div>`}
 function render(){
  $("#hud").innerHTML=`<span>День ${S.round}/${ROUNDS}</span><span>Гроші: ${S.money} ₴</span><span>Комп’ютер: ${S.price} ₴</span>`;
  $("#bar").style.width=Math.min(100,S.money/S.price*100)+"%";$("#note").textContent=S.note;
- $("#tasks").innerHTML=S.tasks.map(card).join("");const vs=$("#vslot");if(vs){vs.appendChild(vid);vid.play().catch(()=>{})}}
+ const cur=S.cur,last=S.tasks.length-1,nd=S.tasks.filter(isDone).length;$("#tasks").innerHTML=`<div class='wide hint'>Виконано ${nd} з ${S.tasks.length}. Роби по одному завданню, без поспіху.</div><div class='wide steps'>${S.tasks.map((t,i)=>`<button class='${i==cur?'st-cur':isDone(t)?'st-ok':''}' onclick='S.cur=${i};render()'>${i+1}. ${t.subj}</button>`).join('')}</div>`+card(S.tasks[cur],cur)+`<div class='wide row'><button onclick='go(-1)' ${cur==0?'disabled':''}>Назад</button>${cur<last?`<button class='p' onclick='go(1)'>Далі</button>`:`<button class='p' onclick='submit()'>Здати домашку</button>`}</div>`;const vs=$("#vslot");if(vs){vs.appendChild(vid);vid.play().catch(()=>{})}}
 const setOpt=(i,j)=>{S.tasks[i].val=S.tasks[i].opts[j];render()};
 const pe=i=>{const t=S.tasks[i];t.val=Math.min(10,t.val+1);render()};
 const aiHint=i=>{S.tasks[i].showHint=true;render()};
@@ -149,7 +150,7 @@ function aiAns(i){const t=S.tasks[i];if(t.ai)return;t.ai=true;t.val=t.ans;if(t.s
 function dec(el){el.nextElementSibling.textContent=el.value.split(/\s+/).filter(Boolean).map(c=>cp(+c)).join("")}
 const norm=v=>String(v??"").toLowerCase().replace(/[’'ʼ`]/g,"").replace(/\s+/g," ").trim();
 function submit(){const miss=S.tasks.filter(t=>t.kind=='pe'?t.val<10:t.kind=='seq'?t.sel.length<t.items.length:!String(t.val||'').trim());
- if(miss.length){S.note='Ще не виконано: '+miss.map(t=>t.subj).join(', ')+'. Поки не зробиш усе, домашку не здати.';render();window.scrollTo({top:0,behavior:'smooth'});return}
+ if(miss.length){S.note='Ще не виконано: '+miss.map(t=>t.subj).join(', ')+'. Поки не зробиш усе, домашку не здати.';S.cur=S.tasks.indexOf(miss[0]);render();window.scrollTo({top:0,behavior:'smooth'});return}
  S.note='';
  const who=Math.random()<.5?"dad":"mom",fav=who=="dad"?DAD:MOM;let sum=0;
  const rows=S.tasks.map(t=>{const ok=t.kind=="pe"?t.val>=10:norm(t.val)===norm(t.ans),f=fav.includes(t.subj);
