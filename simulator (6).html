@@ -1,530 +1,206 @@
 <!DOCTYPE html>
-<html lang="uk">
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Тиждень школяра</title>
-  <style>
-    :root {
-      --bg: #f5f3ee;
-      --card: #fff;
-      --tx: #1d1d1b;
-      --mu: #6b6a64;
-      --ac: #2f6fed;
-      --ok: #1f9d55;
-      --bad: #d64545;
-      --bd: #e2dfd6;
-      box-sizing: border-box;
-      padding-top: env(safe-area-inset-top, 0px);
-      padding-bottom: env(safe-area-inset-bottom, 0px);
-      color-scheme: light
-    }
-
-    @media (prefers-color-scheme:dark) {
-      :root:not([data-theme="light"]) {
-        --bg: #15171c;
-        --card: #1f2229;
-        --tx: #ececea;
-        --mu: #9a9a94;
-        --ac: #6b9bff;
-        --ok: #43c37b;
-        --bad: #f06a6a;
-        --bd: #333741;
-        color-scheme: dark
-      }
-    }
-
-    :root[data-theme="dark"] {
-      --bg: #15171c;
-      --card: #1f2229;
-      --tx: #ececea;
-      --mu: #9a9a94;
-      --ac: #6b9bff;
-      --ok: #43c37b;
-      --bad: #f06a6a;
-      --bd: #333741;
-      color-scheme: dark
-    }
-
-    * {
-      box-sizing: border-box
-    }
-
-    html,
-    body {
-      margin: 0
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--tx);
-      font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      padding: 16px
-    }
-
-    main {
-      max-width: 860px;
-      margin: 0 auto
-    }
-
-    h1 {
-      font-size: 22px;
-      margin: 0 0 4px
-    }
-
-    .sub {
-      color: var(--mu);
-      margin: 0 0 14px;
-      font-size: 14px
-    }
-
-    #hud {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      font-weight: 600;
-      margin-bottom: 8px
-    }
-
-    .track {
-      height: 10px;
-      background: var(--bd);
-      border-radius: 6px;
-      overflow: hidden
-    }
-
-    #bar {
-      height: 100%;
-      width: 0;
-      background: var(--ok);
-      transition: width .4s
-    }
-
-    #note {
-      min-height: 22px;
-      margin: 8px 0;
-      color: var(--bad);
-      font-size: 14px
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 12px
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--bd);
-      border-radius: 12px;
-      padding: 14px
-    }
-
-    .card h3 {
-      margin: 0 0 6px;
-      font-size: 15px
-    }
-
-    .card p {
-      margin: 0 0 10px
-    }
-
-    input {
-      width: 100%;
-      padding: 9px;
-      border: 1px solid var(--bd);
-      border-radius: 8px;
-      background: var(--bg);
-      color: var(--tx);
-      font: inherit
-    }
-
-    button {
-      font: inherit;
-      cursor: pointer;
-      border: 1px solid var(--bd);
-      background: var(--card);
-      color: var(--tx);
-      border-radius: 8px;
-      padding: 8px 12px
-    }
-
-    button.p {
-      background: var(--ac);
-      color: #fff;
-      border-color: var(--ac)
-    }
-
-    .o {
-      display: block;
-      width: 100%;
-      text-align: left;
-      margin-bottom: 6px
-    }
-
-    .o.sel {
-      border-color: var(--ac);
-      outline: 2px solid var(--ac)
-    }
-
-    .row {
-      display: flex;
-      gap: 6px;
-      margin-top: 8px;
-      flex-wrap: wrap
-    }
-
-    .row button {
-      font-size: 13px;
-      padding: 6px 9px
-    }
-
-    .hint {
-      font-size: 13px;
-      color: var(--mu);
-      margin-top: 8px
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse
-    }
-
-    td {
-      padding: 6px;
-      border-bottom: 1px solid var(--bd)
-    }
-
-    .pos {
-      color: var(--ok)
-    }
-
-    .neg {
-      color: var(--bad)
-    }
-
-    #go {
-      margin-top: 14px
-    }
-
-    [hidden] {
-      display: none !important
-    }
-
-    details {
-      margin: 10px 0
-    }
-
-    summary {
-      cursor: pointer;
-      font-weight: 600
-    }
-
-    .tb {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
-      gap: 3px;
-      font: 13px ui-monospace, monospace;
-      margin-top: 6px
-    }
-
-    div.tb span {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      padding: 4px 8px
-    }
-
-    div.tb b {
-      font: 600 19px/1.1 system-ui, "Segoe UI", Arial, sans-serif;
-      min-width: 22px;
-      text-align: center
-    }
-
-    .codes {
-      display: block;
-      font: 600 18px/1.8 ui-monospace, monospace;
-      word-spacing: 6px;
-      margin-top: 6px
-    }
-
-    .wide {
-      grid-column: 1/-1
-    }
-
-    .two {
-      display: grid;
-      grid-template-columns: 1fr 1.6fr;
-      gap: 16px
-    }
-
-    .tb.bin {
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr))
-    }
-
-    .tb.scr {
-      max-height: 420px;
-      overflow: auto;
-      align-content: start
-    }
-
-    @media(max-width:640px) {
-      .two {
-        grid-template-columns: 1fr
-      }
-    }
-
-    .tb span {
-      padding: 2px 6px;
-      border: 1px solid var(--bd);
-      border-radius: 4px;
-      background: var(--card)
-    }
-
-    video {
-      width: 100%;
-      max-width: 320px;
-      border-radius: 8px;
-      background: #000;
-      margin-top: 8px;
-      transform: scaleX(-1)
-    }
-
-    #story p {
-      margin: 0 0 10px
-    }
-  </style>
-</head>
-
-<body>
-  <main>
-    <h1>Тиждень школяра</h1>
-    <p class="sub">Мета: купити комп’ютер до турніру. Роби домашку — отримуй кишенькові від тата чи мами.</p>
-    <div id="story" class="card">
-      <h3>Сюжет</h3>
-      <p>Твій старий комп’ютер остаточно помер просто посеред уроку інформатики. Батьки готові допомогти з новим, але на
-        одній умові: гроші треба заробити самому. Через вісім днів у гуртку починається турнір, і без комп’ютера ти туди
-        не потрапиш. Встигни назбирати вчасно.</p><button class="p"
-        onclick="document.getElementById('story').hidden=true;document.getElementById('game').hidden=false">Почати
-        гру</button>
-    </div>
-    <div id="game" hidden>
-      <div id="hud"></div>
-      <div class="track">
-        <div id="bar"></div>
-      </div>
-      <div id="note"></div>
-      <div id="tasks" class="grid"></div>
-      <div id="go"><button class="p" onclick="submit()">Здати домашку</button></div>
-      <div id="res" class="card" hidden></div>
-    </div>
-  </main>
-  <script>
-    const $ = s => document.querySelector(s), rnd = n => Math.floor(Math.random() * n), pick = a => a[rnd(a.length)];
-    const shuffle = a => [...a].sort(() => Math.random() - .5); const DK = {}; const take = (a, k) => { if (!DK[k] || !DK[k].length) DK[k] = shuffle(a); return DK[k].pop() };
-    const ROUNDS = 8, PRICE0 = 1800, BASE = 40, BONUS = 60, FINE = 40;
-    const DAD = ["Алгебра", "Геометрія", "Історія"], MOM = ["Укр. мова", "Інформатика"];
-    const S = { round: 1, money: 0, price: PRICE0, tasks: [], note: "" };
-    const SP = { "і": 179, "І": 178, "ї": 191, "Ї": 175, "є": 186, "Є": 170, "ґ": 180, "Ґ": 165 };
-    const enc = t => [...t].map(c => { if (SP[c]) return SP[c]; const k = c.charCodeAt(0); return k >= 1040 && k <= 1103 ? k - 848 : k }).join(" ");
-    const cp = k => { for (const c in SP) if (SP[c] === k) return c; return String.fromCharCode(k >= 192 && k <= 255 ? k + 848 : k) };
-    const H = [
-      { q: "Коли відбулася Помаранчева революція?", o: ["2004", "2010", "1991"], h: "Це початок 2000-х, а не 2010-ті." },
-      { q: "Коли почалася Революція Гідності?", o: ["2013", "2004", "2019"], h: "Усе почалося пізньою осінню, після зупинки євроінтеграції." },
-      { q: "Коли Україна проголосила незалежність?", o: ["1991", "1989", "2004"], h: "Це сталося після серпневого путчу в Москві." },
-      { q: "У якому році Україна приймала Євро?", o: ["2012", "2008", "2016"], h: "Фінал грали в Києві." },
-      { q: "Коли почалося повномасштабне вторгнення РФ?", o: ["2022", "2014", "2020"], h: "Це лютий, і це не 2014-й." },
-      { q: "Коли почалася російська агресія в Криму та на Донбасі?", o: ["2014", "2004", "2022"], h: "Це сталося одразу після Революції Гідності." },
-      { q: "Коли Україна отримала безвізовий режим з ЄС?", o: ["2017", "2010", "2022"], h: "Це середина 2010-х, ближче до 2020-го." },
-      { q: "Коли Україна отримала статус кандидата в члени ЄС?", o: ["2022", "2014", "2019"], h: "Це було влітку, вже під час повномасштабної війни." },
-      { q: "У якому році Володимир Зеленський став президентом?", o: ["2019", "2014", "2010"], h: "Інавгурація була навесні, наприкінці 2010-х." },
-      { q: "Хто представляв Україну на Євробаченні й переміг у 2022?", o: ["Kalush Orchestra", "Джамала", "Руслана"], h: "Пісня називається Stefania." }];
-    const U = [
-      { q: "Як правильно?", o: ["приємний", "приймний", "приїмний"], h: "Згадай слово «приємність»." },
-      { q: "Як правильно?", o: ["щоденник", "щодєнник", "шчоденник"], h: "Це «що» + «день»." },
-      { q: "Як правильно?", o: ["з’їсти", "зїсти", "з їсти"], h: "Після префікса перед я, ю, є, ї ставимо апостроф." },
-      { q: "Як правильно?", o: ["м’яч", "мяч", "мйач"], h: "Апостроф стоїть після губного приголосного перед я." },
-      { q: "Як правильно?", o: ["розв’язати", "розвязати", "розв язати"], h: "Префікс роз- плюс «в’язати»." },
-      { q: "Як правильно?", o: ["об’єкт", "обєкт", "об єкт"], h: "Після префікса об- перед є ставимо апостроф." },
-      { q: "Як правильно?", o: ["пір’я", "піря", "пір’йа"], h: "Апостроф стоїть після р перед я." },
-      { q: "Як правильно?", o: ["бур’ян", "бурян", "бурйан"], h: "Після р перед я ставимо апостроф." }];
-    const R = [
-      { t: "Через воду він проводить, а сам з місця не сходить.", a: "міст" },
-      { t: "Без рук, без ніг, а вікна малює.", a: "мороз" },
-      { t: "Сто одежин, і всі без застібок.", a: "капуста" },
-      { t: "Не звір, а має хвіст, клацає на столі.", a: "комп’ютерна миша" },
-      { t: "Не вогонь, а палить.", a: "кропива" },
-      { t: "Червоний ніс у землю вріс, а зелений хвіст нагору.", a: "морква" },
-      { t: "Без рук, без ніг, а ворота відчиняє.", a: "вітер" },
-      { t: "Сидить дід у ста шубах, хто його роздягає, той плаче.", a: "цибуля" }];
-    function algQ() {
-      const k = rnd(3);
-      if (k == 0) { const p = 1 + rnd(9), q = p + 1 + rnd(8); return { q: `Знайди більший корінь рівняння x² − ${p + q}x + ${p * q} = 0.`, ans: String(q), hint: `Теорема Вієта: сума коренів ${p + q}, добуток ${p * q}. Підбери два числа.` } }
-      if (k == 1) { const a = 3 + rnd(10), b = 2 + rnd(8); return { q: `Обчисли √${a * a} + √${b * b}.`, ans: String(a + b), hint: `Згадай таблицю квадратів: потрібні числа, що в квадраті дають ${a * a} і ${b * b}.` } }
-      const a = 1 + rnd(4), b = 2 + rnd(9), c = 1 + rnd(6); return { q: `Знайди дискримінант рівняння ${a}x² + ${b}x + ${c} = 0.`, ans: String(b * b - 4 * a * c), hint: `D = b² − 4ac, тут b² = ${b * b}.` }
-    }
-    function geoQ() {
-      const k = rnd(4);
-      if (k == 0) { const t = pick([[3, 4, 5], [5, 12, 13], [8, 15, 17], [6, 8, 10]]); return { q: `Катети прямокутного трикутника дорівнюють ${t[0]} і ${t[1]}. Знайди гіпотенузу.<svg viewBox='0 0 130 90' width='150' style='display:block;margin:6px 0'><polygon points='10,80 120,80 10,10' fill='none' stroke='currentColor' stroke-width='2'/><text x='60' y='89' font-size='11' fill='currentColor'>${t[0]}</text><text x='0' y='48' font-size='11' fill='currentColor'>${t[1]}</text><text x='72' y='40' font-size='11' fill='currentColor'>?</text></svg>`, ans: String(t[2]), hint: `Теорема Піфагора: c² = a² + b² = ${t[0] * t[0] + t[1] * t[1]}.` } }
-      if (k == 1) { const x = 50 + rnd(8) * 10; return { q: `Один кут паралелограма дорівнює ${x}°. Знайди сусідній кут (у градусах).`, ans: String(180 - x), hint: "Сума сусідніх кутів паралелограма дорівнює 180°." } }
-      if (k == 2) { const a = 3 + rnd(8), b = a + 2 + rnd(8), h = 2 * (1 + rnd(5)); return { q: `Основи трапеції ${a} см і ${b} см, висота ${h} см. Знайди площу (см²).`, ans: String((a + b) * h / 2), hint: "S = (a + b) / 2 · h." } }
-      const d = 2 * (2 + rnd(6)), e = 2 * (2 + rnd(6)); return { q: `Діагоналі ромба дорівнюють ${d} см і ${e} см. Знайди площу (см²).`, ans: String(d * e / 2), hint: "S = ½ · d₁ · d₂." }
-    }
-    function mathQ() {
-      const a = 2 + rnd(8), b = 3 + rnd(8), c = 5 + rnd(40), k = rnd(3);
-      if (k == 0) return { q: `${a} × ${b} + ${c}`, ans: a * b + c };
-      if (k == 1) return { q: `(${a} + ${c}) × ${b}`, ans: (a + c) * b };
-      return { q: `${a * b + c} − ${a} × ${b}`, ans: c }
-    }
-    const TFH = [{ q: 'Незалежність України проголошено у 1991 році.', a: 'Так' }, { q: 'Революція Гідності почалася у 2004 році.', a: 'Ні' }, { q: 'Євро-2012 проходило в Україні та Польщі.', a: 'Так' }, { q: 'Безвіз з ЄС Україна отримала у 2010 році.', a: 'Ні' }, { q: 'Зеленський став президентом у 2019 році.', a: 'Так' }, { q: 'Помаранчева революція була у 2013 році.', a: 'Ні' }];
-    const TFU = [{ q: 'Слово «з’їсти» пишеться з апострофом.', a: 'Так' }, { q: 'Слово «м’яч» пишеться без апострофа.', a: 'Ні' }, { q: 'У слові «пір’я» потрібен апостроф.', a: 'Так' }, { q: 'Слово «щоденник» пишеться через «шч».', a: 'Ні' }, { q: 'Слово «об’єкт» пишеться з апострофом.', a: 'Так' }];
-    const TFA = [{ q: '(a + b)² = a² + 2ab + b².', a: 'Так' }, { q: '√(a²) = a для будь-якого числа a.', a: 'Ні' }, { q: 'Рівняння x² = −4 має два корені.', a: 'Ні' }, { q: 'Якщо D = 0, рівняння має один корінь.', a: 'Так' }, { q: '(a − b)² = a² − b².', a: 'Ні' }, { q: 'Сума коренів рівняння x² − 5x + 6 = 0 дорівнює 5.', a: 'Так' }];
-    const TFG = [{ q: 'Діагоналі прямокутника рівні.', a: 'Так' }, { q: 'Діагоналі паралелограма завжди перпендикулярні.', a: 'Ні' }, { q: 'Сума кутів чотирикутника дорівнює 360°.', a: 'Так' }, { q: 'У рівнобічній трапеції бічні сторони рівні.', a: 'Так' }, { q: 'Будь-який ромб є квадратом.', a: 'Ні' }];
-    const GQ = [{ q: 'Чотирикутник, у якого лише дві сторони паралельні, — це…', o: ['трапеція', 'паралелограм', 'ромб'], h: 'Паралельні сторони називають основами.' }, { q: 'Діагоналі ромба…', o: ['перпендикулярні', 'завжди рівні', 'паралельні'], h: 'Вони ще й ділять кути ромба навпіл.' }, { q: 'Сума кутів чотирикутника дорівнює…', o: ['360°', '180°', '270°'], h: 'Розріж чотирикутник діагоналлю на два трикутники.' }, { q: 'Середня лінія трапеції дорівнює…', o: ['півсумі основ', 'добутку основ', 'різниці основ'], h: 'Це середнє арифметичне основ.' }, { q: 'У прямокутному трикутнику найдовша сторона — це…', o: ['гіпотенуза', 'катет', 'висота'], h: 'Вона лежить проти прямого кута.' }];
-    const FILL = [['пр_вітання', 'и'], ['ж_ття', 'и'], ['д_ректор', 'и'], ['т_плий', 'е'], ['б_реза', 'е'], ['в_сна', 'е'], ['н_бо', 'е'], ['пр_гожий', 'и']];
-    const tf = (b, k, subj) => { const x = take(b, k); return { subj, kind: 'opt', q: 'Правда чи ні? ' + x.q, opts: ['Так', 'Ні'], ans: x.a, val: '', hint: 'Пригадай правило або дату з уроку.' } };
-    const seqPick = (i, j) => { const t = S.tasks[i]; t.sel.push(t.items[j]); t.val = t.sel.join(' > '); render() };
-    const seqReset = i => { const t = S.tasks[i]; t.sel = []; t.val = ''; render() };
-    function histT() {
-      const r = rnd(3);
-      if (r == 0) { const h = take(H, 'H'); return { subj: 'Історія', kind: 'opt', q: h.q, opts: shuffle(h.o), ans: h.o[0], val: '', hint: h.h } }
-      if (r == 1) return tf(TFH, 'TFH', 'Історія');
-      const E = [['Проголошення незалежності', 1991], ['Помаранчева революція', 2004], ['Євро-2012', 2012], ['Революція Гідності', 2013], ['Безвіз з ЄС', 2017], ['Статус кандидата в ЄС', 2022]];
-      const pk = shuffle(E).slice(0, 4).sort((a, b) => a[1] - b[1]).map(x => x[0]);
-      return { subj: 'Історія', kind: 'seq', q: 'Розстав події від найранішої до найпізнішої (клікай по черзі):', items: shuffle(pk), sel: [], ans: pk.join(' > '), val: '', hint: `Найперша подія — «${pk[0]}».` }
-    }
-    function ukrT() {
-      const r = rnd(3);
-      if (r == 0) { const u = take(U, 'U'); return { subj: 'Укр. мова', kind: 'opt', q: u.q, opts: shuffle(u.o), ans: u.o[0], val: '', hint: u.h } }
-      if (r == 1) { const f = take(FILL, 'FILL'); return { subj: 'Укр. мова', kind: 'num', q: `Встав пропущену літеру (и або е): ${f[0]}`, ans: f[1], val: '', hint: 'Зміни форму слова так, щоб наголос упав на цей склад.' } }
-      return tf(TFU, 'TFU', 'Укр. мова')
-    }
-    function algT() {
-      const r = rnd(5);
-      if (r == 0) { const a = 1 + rnd(3), b = 1 + rnd(6), c = 1 + rnd(9), D = b * b - 4 * a * c; return { subj: 'Алгебра', kind: 'opt', q: `Скільки коренів має рівняння ${a}x² + ${b}x + ${c} = 0?`, opts: ['0', '1', '2'], ans: D > 0 ? '2' : D == 0 ? '1' : '0', val: '', hint: 'Порахуй D = b² − 4ac: D > 0 — два корені, D = 0 — один, D < 0 — жодного.' } }
-      if (r == 1) return tf(TFA, 'TFA', 'Алгебра');
-      const x = algQ(); return { subj: 'Алгебра', kind: 'num', q: x.q, ans: x.ans, val: '', hint: x.hint }
-    }
-    function geoT() {
-      const r = rnd(6);
-      if (r == 0) { const x = take(GQ, 'GQ'); return { subj: 'Геометрія', kind: 'opt', q: x.q, opts: shuffle(x.o), ans: x.o[0], val: '', hint: x.h } }
-      if (r == 1) return tf(TFG, 'TFG', 'Геометрія');
-      const x = geoQ(); return { subj: 'Геометрія', kind: 'num', q: x.q, ans: x.ans, val: '', hint: x.hint }
-    }
-    function infT() {
-      const r = rnd(4), T = (q, ans, hint) => ({ subj: 'Інформатика', kind: 'txt', q, ans, val: '', hint });
-      if (r == 0) { const x = take(R, 'R'), code = enc(x.t); return T(`Розшифруй коди (cp1251) і відгадай загадку: <span class='codes'>${code}</span>`, x.a, `Перший код ${code.split(' ')[0]} — це «${x.t[0]}». Далі за таблицею: 192 = А, 224 = а, 32 = пробіл.`) }
-      if (r == 1) { const w = pick(['кіт', 'дім', 'мама', 'школа', 'код', 'миша']); return T(`Запиши коди літер слова «${w}» через пробіл (cp1251).`, enc(w), `Перша літера «${w[0]}» має код ${enc(w[0])}. Інші знайди в таблиці.`) }
-      if (r == 2) { let k; do { k = 192 + rnd(64) } while ([218, 219, 221, 250, 251, 253].includes(k)); return T(`Яка літера має код ${k} у таблиці cp1251?`, cp(k), k < 224 ? 'Великі літери мають коди 192–223.' : 'Малі літери мають коди 224–255.') }
-      const n = 5 + rnd(26); return T(`Переведи двійкове число ${n.toString(2)} у десяткову систему.`, String(n), 'Розряди справа наліво: 1, 2, 4, 8, 16.')
-    }
-    function newRound() {
-
-      S.tasks = [
-        algT(),
-        geoT(),
-        histT(),
-        ukrT(),
-        infT(),
-        { subj: "Фізкультура", kind: "pe", q: "Зроби 10 присідань перед вебкамерою (зараховуються лише глибокі присідання, усією висотою тіла). Увімкни камеру, відкалібруй і присідай.", ans: "", val: 0 }];
-      $("#res").hidden = true; $("#tasks").hidden = false; $("#go").hidden = false; render()
-    }
-    function card(t, i) {
-      let b = "";
-      if (t.kind == "opt") b = t.opts.map((o, j) => `<button class="o ${t.val === o ? "sel" : ""}" onclick="setOpt(${i},${j})">${o}</button>`).join("");
-      else if (t.kind == "seq") b = t.items.map((o, j) => `<button class='o ${t.sel.includes(o) ? 'sel' : ''}' ${t.sel.includes(o) ? 'disabled' : ''} onclick='seqPick(${i},${j})'>${t.sel.includes(o) ? (t.sel.indexOf(o) + 1) + '. ' : ''}${o}</button>`).join('') + `<div class='row'><button onclick='seqReset(${i})'>Скинути порядок</button></div>`;
-      else if (t.kind == "pe") b = (cam.on ? `<div id="vslot"></div><div class="row"><button onclick="calib()">Калібрувати</button><button onclick="resetPe()">Скинути лічильник</button><button onclick="camStop()">Вимкнути камеру</button></div><div class="hint" id="cst">${cam.msg}</div><b id="pc">Присідання: ${t.val}/10</b>` : `<div class="row"><button class="p" onclick="camStart()">Увімкнути камеру</button></div><b>Присідання: ${t.val}/10</b>${cam.msg ? `<div class="hint">Увага: ${cam.msg}</div>` : ""}`);
-      else b = `<input value="${t.val}" ${t.ai ? "disabled" : ""} oninput="S.tasks[${i}].val=this.value" placeholder="Твоя відповідь">` +
-        "";
-      if (t.kind == "txt") b = `<div class="two"><div>${b}</div><div><b>Таблиця кодування</b><div id="tbw">${tbHtml()}</div></div></div>`;
-      const ai = t.kind == "pe" ? "" : `<div class="row"><button onclick="aiHint(${i})">ШІ: підказка</button><button onclick="aiAns(${i})">ШІ: відповідь</button></div>`;
-      return `<div class="card${t.kind == "txt" ? " wide" : ""}"><h3>${t.subj}${t.ai ? " (ШІ)" : ""}</h3><p>${t.q}</p>${b}${ai}${t.showHint ? `<div class="hint">Підказка: ${t.hint}</div>` : ""}</div>`
-    }
-    function render() {
-      $("#hud").innerHTML = `<span>День ${S.round}/${ROUNDS}</span><span>Гроші: ${S.money} ₴</span><span>Комп’ютер: ${S.price} ₴</span>`;
-      $("#bar").style.width = Math.min(100, S.money / S.price * 100) + "%"; $("#note").textContent = S.note;
-      $("#tasks").innerHTML = S.tasks.map(card).join(""); const vs = $("#vslot"); if (vs) { vs.appendChild(vid); vid.play().catch(() => { }) }
-    }
-    const setOpt = (i, j) => { S.tasks[i].val = S.tasks[i].opts[j]; render() };
-    const pe = i => { const t = S.tasks[i]; t.val = Math.min(10, t.val + 1); render() };
-    const aiHint = i => { S.tasks[i].showHint = true; render() };
-    function aiAns(i) {
-      const t = S.tasks[i]; if (t.ai) return; t.ai = true; t.val = t.ans; if (t.sel) t.sel = t.ans.split(' > ');
-      const d = Math.random() < .6 ? 10 + rnd(30) : 120 + rnd(100); S.price += d;
-      S.note = `ШІ відповів, але комп’ютер подорожчав на ${d} ₴.`; render()
-    }
-    function dec(el) { el.nextElementSibling.textContent = el.value.split(/\s+/).filter(Boolean).map(c => cp(+c)).join("") }
-    const norm = v => String(v ?? "").toLowerCase().replace(/[’'ʼ`]/g, "").replace(/\s+/g, " ").trim();
-    function submit() {
-      const miss = S.tasks.filter(t => t.kind == 'pe' ? t.val < 10 : t.kind == 'seq' ? t.sel.length < t.items.length : !String(t.val || '').trim());
-      if (miss.length) { S.note = 'Ще не виконано: ' + miss.map(t => t.subj).join(', ') + '. Поки не зробиш усе, домашку не здати.'; render(); window.scrollTo({ top: 0, behavior: 'smooth' }); return }
-      S.note = '';
-      const who = Math.random() < .5 ? "dad" : "mom", fav = who == "dad" ? DAD : MOM; let sum = 0;
-      const rows = S.tasks.map(t => {
-        const ok = t.kind == "pe" ? t.val >= 10 : norm(t.val) === norm(t.ans), f = fav.includes(t.subj);
-        const d = ok ? (f ? BONUS : BASE) : (f ? -FINE : 0); sum += d;
-        return `<tr><td>${t.subj}${f ? " (бонус)" : ""}</td><td>${ok ? "Вірно" : "Помилка"}${t.ai ? " (ШІ)" : ""}</td><td class="${d < 0 ? "neg" : "pos"}">${d > 0 ? "+" : ""}${d} ₴</td></tr>`
-      }).join("");
-      S.money = Math.max(0, S.money + sum); S.note = "";
-      const win = S.money >= S.price, end = S.round >= ROUNDS;
-      let msg = `Сьогодні перевіряв(ла): <b>${who == "dad" ? "тато (алгебра, геометрія, історія)" : "мама (укр. мова й інформатика)"}</b>`;
-      let btn = `<button class="p" onclick="S.round++;newRound()">Наступний день</button>`;
-      if (win) { msg += `<h3>Комп’ютер куплено! Тепер можна їхати на турнір.</h3>`; btn = `<button class="p" onclick="restart()">Грати знову</button>` }
-      else if (end) { msg += `<h3>Турнір пройде без тебе: не вистачило ${S.price - S.money} ₴.</h3>`; btn = `<button class="p" onclick="restart()">Спробувати ще</button>` }
-      $("#tasks").hidden = true; $("#go").hidden = true; render();
-      $("#res").hidden = false;
-      $("#res").innerHTML = `<p>${msg}</p><table>${rows}</table><p><b>Разом за день: <span class="${sum < 0 ? "neg" : "pos"}">${sum > 0 ? "+" : ""}${sum} ₴</span></b></p>${btn}`
-    }
-    function restart() { Object.assign(S, { round: 1, money: 0, price: PRICE0, note: "" }); newRound() }
-    const tbk = [165, 170, 175, 178, 179, 180, 186, 191]; for (let k = 192; k <= 255; k++)tbk.push(k);
-    const TBS = { p: 3, bin: false };
-    const td = (() => { try { return new TextDecoder("windows-1251") } catch (e) { return null } })();
-    function chr(k) { if (k == 32) return "пр."; if (k == 127) return "DEL"; if (k == 152) return "□"; if (k == 160) return "nbsp"; if (k == 173) return "shy"; if (k < 128) return String.fromCharCode(k); return td ? td.decode(new Uint8Array([k])) : cp(k) }
-    function tbHtml() {
-      const L = TBS.p == 0 ? [...tbk.slice(8), ...tbk.slice(0, 8)] : Array.from({ length: TBS.p == 1 ? 96 : TBS.p == 2 ? 128 : 224 }, (_, i) => (TBS.p == 2 ? 128 : 32) + i); let c = ""; for (const k of L) { const bn = k.toString(2).padStart(8, "0"); c += `<span title="${bn}"><b>${chr(k)}</b> ${k}${TBS.bin ? " " + bn : ""}</span>` }
-      return `<div class="row"><button class="${TBS.p == 3 ? "p" : ""}" onclick="tbTab(3)">Усі (32–255)</button><button class="${TBS.p == 0 ? "p" : ""}" onclick="tbTab(0)">Українські літери</button><button class="${TBS.p == 1 ? "p" : ""}" onclick="tbTab(1)">Частина 1 (32–127)</button><button class="${TBS.p == 2 ? "p" : ""}" onclick="tbTab(2)">Частина 2 (128–255)</button></div><label class="hint" style="display:block;margin:6px 0"><input type="checkbox" ${TBS.bin ? "checked" : ""} onchange="TBS.bin=this.checked;tbTab(TBS.p)" style="width:auto"> показати двійковий код</label><div class="tb${TBS.bin ? " bin" : ""}${TBS.p == 3 ? " scr" : ""}">${c}</div>`
-    }
-    function tbTab(p) { TBS.p = p; const w = $("#tbw"); if (w) w.innerHTML = tbHtml() }
-    const cam = { on: false, msg: "", stream: null, bg: null, state: "up", base: null, raf: 0 }, vid = document.createElement("video");
-    vid.autoplay = true; vid.muted = true; vid.playsInline = true;
-    const cv = document.createElement("canvas"), cx = cv.getContext("2d", { willReadFrequently: true }); cv.width = 64; cv.height = 48;
-    function grab() { cx.drawImage(vid, 0, 0, 64, 48); const d = cx.getImageData(0, 0, 64, 48).data, g = new Uint8Array(3072); for (let i = 0; i < 3072; i++)g[i] = (d[i * 4] + d[i * 4 + 1] + d[i * 4 + 2]) / 3; return g }
-    async function camStart() {
-      try { cam.stream = await navigator.mediaDevices.getUserMedia({ video: { width: 320, height: 240 } }) }
-      catch (e) { cam.msg = "Камера не запустилась (" + (e && e.name || "помилка") + "). Імовірно, браузер блокує доступ до камери у вбудованому перегляді. Відкрийте завантажений файл simulator.html у браузері."; render(); return }
-      vid.srcObject = cam.stream; cam.on = true; cam.bg = null; cam.state = "up"; cam.base = null;
-      cam.msg = "Відійди від кадру й натисни «Калібрувати», потім стань у кадр на повний зріст і присідай."; S.note = ""; render(); loop()
-    }
-    function resetPe() { S.tasks[5].val = 0; const p = $("#pc"); if (p) p.textContent = "Присідання: 0/10"; cam.state = "up"; cam.m = null }
-    function camStop() { cancelAnimationFrame(cam.raf); if (cam.stream) cam.stream.getTracks().forEach(t => t.stop()); cam.stream = null; cam.on = false; cam.msg = ""; render() }
-    function calib() {
-      if (vid.readyState < 2 || cam.cd) return; cam.bg = null; let n = 5; const say = t => { const e = $("#cst"); if (e) e.textContent = t };
-      cam.cd = setInterval(() => {
-        if (!cam.on) { clearInterval(cam.cd); cam.cd = 0; return }
-        if (n > 0) { say(`Відійди повністю з кадру! Калібрування через ${n}…`); n--; return }
-        clearInterval(cam.cd); cam.cd = 0; cam.bg = grab(); cam.state = "up"; cam.m = null; cam.s = null; cam.fr = 0; cam.H0 = null; cam.hs = null; cam.b0 = null;
-        say("Готово! Тепер стань у кадр на повний зріст і присідай.")
-      }, 1000); say("Відійди повністю з кадру! Калібрування через 5…")
-    }
-    function loop() {
-      cam.raf = requestAnimationFrame(loop);
-      if (!cam.on || !cam.bg || vid.readyState < 2) return;
-      const g = grab(), W = 64, H = 48; let n = 0, top = -1, bot = -1;
-      for (let y = 0; y < H; y++) { let c = 0; for (let x = 0; x < W; x++)if (Math.abs(g[y * W + x] - cam.bg[y * W + x]) > 28) c++; if (c >= 6) { if (top < 0) top = y; bot = y } n += c }
-      const e = $('#cst'), t = S.tasks[5], now = performance.now(); cam.fr++;
-      if (n < 80 || top < 0 || bot - top < 10) { if (e && cam.fr % 15 == 0) e.textContent = 'Не бачу тебе повністю. Відійди далі, щоб було видно голову й ноги.'; return }
-      const h = bot - top; cam.hs = cam.hs == null ? h : cam.hs * .5 + h * .5;
-      if (cam.H0 == null || cam.hs > cam.H0) cam.H0 = cam.hs; else cam.H0 -= (cam.H0 - cam.hs) * .0007;
-      if (cam.b0 == null) cam.b0 = bot;
-      const ratio = cam.hs / cam.H0;
-      if (cam.state == 'up') { cam.b0 += (bot - cam.b0) * .05; if (ratio < .8 && Math.abs(bot - cam.b0) < 5) { cam.state = 'down'; cam.t0 = now } }
-      else if (Math.abs(bot - cam.b0) > 7 || now - cam.t0 > 6000) cam.state = 'up';
-      else if (ratio > .92) { cam.state = 'up'; if (now - cam.t0 > 400 && t.val < 10) { t.val++; const p = $('#pc'); if (p) p.textContent = `Присідання: ${t.val}/10${t.val >= 10 ? ' Готово!' : ''}` } }
-      if (e && cam.fr % 10 == 0) e.textContent = `Бачу тебе. ${cam.state == 'down' ? 'Внизу. Тепер вставай повністю.' : 'Вгорі. Присідай глибоко.'}`
-    }
-    newRound();
-  </script>
-</body>
-
-</html>
+<html lang="uk"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Тиждень школяра</title>
+<style>
+:root{--bg:#f5f3ee;--card:#fff;--tx:#1d1d1b;--mu:#6b6a64;--ac:#2f6fed;--ok:#1f9d55;--bad:#d64545;--bd:#e2dfd6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15171c;--card:#1f2229;--tx:#ececea;--mu:#9a9a94;--ac:#6b9bff;--ok:#43c37b;--bad:#f06a6a;--bd:#333741;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#15171c;--card:#1f2229;--tx:#ececea;--mu:#9a9a94;--ac:#6b9bff;--ok:#43c37b;--bad:#f06a6a;--bd:#333741;color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:16px}
+main{max-width:860px;margin:0 auto}
+h1{font-size:22px;margin:0 0 4px}.sub{color:var(--mu);margin:0 0 14px;font-size:14px}
+#hud{display:flex;gap:16px;flex-wrap:wrap;font-weight:600;margin-bottom:8px}
+.track{height:10px;background:var(--bd);border-radius:6px;overflow:hidden}
+#bar{height:100%;width:0;background:var(--ok);transition:width .4s}
+#note{min-height:22px;margin:8px 0;color:var(--bad);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px}
+.card h3{margin:0 0 6px;font-size:15px}.card p{margin:0 0 10px}
+input{width:100%;padding:9px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
+button{font:inherit;cursor:pointer;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;padding:8px 12px}
+button.p{background:var(--ac);color:#fff;border-color:var(--ac)}
+.o{display:block;width:100%;text-align:left;margin-bottom:6px}.o.sel{border-color:var(--ac);outline:2px solid var(--ac)}
+.row{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}.row button{font-size:13px;padding:6px 9px}
+.hint{font-size:13px;color:var(--mu);margin-top:8px}
+table{width:100%;border-collapse:collapse}td{padding:6px;border-bottom:1px solid var(--bd)}
+.pos{color:var(--ok)}.neg{color:var(--bad)}
+#go{margin-top:14px}[hidden]{display:none!important}details{margin:10px 0}summary{cursor:pointer;font-weight:600}.tb{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:3px;font:13px ui-monospace,monospace;margin-top:6px}div.tb span{display:flex;align-items:baseline;gap:8px;padding:4px 8px}div.tb b{font:600 19px/1.1 system-ui,"Segoe UI",Arial,sans-serif;min-width:22px;text-align:center}.codes{display:block;font:600 18px/1.8 ui-monospace,monospace;word-spacing:6px;margin-top:6px}.wide{grid-column:1/-1}.two{display:grid;grid-template-columns:1fr 1.6fr;gap:16px}.tb.bin{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}.tb.scr{max-height:420px;overflow:auto;align-content:start}@media(max-width:640px){.two{grid-template-columns:1fr}}.tb span{padding:2px 6px;border:1px solid var(--bd);border-radius:4px;background:var(--card)}video{width:100%;max-width:320px;border-radius:8px;background:#000;margin-top:8px;transform:scaleX(-1)}#story p{margin:0 0 10px}
+</style></head><body><main>
+<h1>Тиждень школяра</h1>
+<p class="sub">Мета: купити комп’ютер до турніру. Роби домашку — отримуй кишенькові від тата чи мами.</p>
+<div id="story" class="card"><h3>Сюжет</h3><p>Твій старий комп’ютер остаточно помер просто посеред уроку інформатики. Батьки готові допомогти з новим, але на одній умові: гроші треба заробити самому. Через вісім днів у гуртку починається турнір, і без комп’ютера ти туди не потрапиш. Встигни назбирати вчасно.</p><button class="p" onclick="document.getElementById('story').hidden=true;document.getElementById('game').hidden=false">Почати гру</button></div><div id="game" hidden><div id="hud"></div><div class="track"><div id="bar"></div></div><div id="note"></div>
+<div id="tasks" class="grid"></div>
+<div id="go"><button class="p" onclick="submit()">Здати домашку</button></div>
+<div id="res" class="card" hidden></div></div>
+</main>
+<script>
+const $=s=>document.querySelector(s),rnd=n=>Math.floor(Math.random()*n),pick=a=>a[rnd(a.length)];
+const shuffle=a=>[...a].sort(()=>Math.random()-.5);const DK={};const take=(a,k)=>{if(!DK[k]||!DK[k].length)DK[k]=shuffle(a);return DK[k].pop()};
+const ROUNDS=8,PRICE0=1800,BASE=40,BONUS=60,FINE=40;
+const DAD=["Алгебра","Геометрія","Історія"],MOM=["Укр. мова","Інформатика"];
+const S={round:1,money:0,price:PRICE0,tasks:[],note:""};
+const SP={"і":179,"І":178,"ї":191,"Ї":175,"є":186,"Є":170,"ґ":180,"Ґ":165};
+const enc=t=>[...t].map(c=>{if(SP[c])return SP[c];const k=c.charCodeAt(0);return k>=1040&&k<=1103?k-848:k}).join(" ");
+const cp=k=>{for(const c in SP)if(SP[c]===k)return c;return String.fromCharCode(k>=192&&k<=255?k+848:k)};
+const H=[
+{q:"Коли відбулася Помаранчева революція?",o:["2004","2010","1991"],h:"Це початок 2000-х, а не 2010-ті."},
+{q:"Коли почалася Революція Гідності?",o:["2013","2004","2019"],h:"Усе почалося пізньою осінню, після зупинки євроінтеграції."},
+{q:"Коли Україна проголосила незалежність?",o:["1991","1989","2004"],h:"Це сталося після серпневого путчу в Москві."},
+{q:"У якому році Україна приймала Євро?",o:["2012","2008","2016"],h:"Фінал грали в Києві."},
+{q:"Коли почалося повномасштабне вторгнення РФ?",o:["2022","2014","2020"],h:"Це лютий, і це не 2014-й."},
+{q:"Коли почалася російська агресія в Криму та на Донбасі?",o:["2014","2004","2022"],h:"Це сталося одразу після Революції Гідності."},
+{q:"Коли Україна отримала безвізовий режим з ЄС?",o:["2017","2010","2022"],h:"Це середина 2010-х, ближче до 2020-го."},
+{q:"Коли Україна отримала статус кандидата в члени ЄС?",o:["2022","2014","2019"],h:"Це було влітку, вже під час повномасштабної війни."},
+{q:"У якому році Володимир Зеленський став президентом?",o:["2019","2014","2010"],h:"Інавгурація була навесні, наприкінці 2010-х."},
+{q:"Хто представляв Україну на Євробаченні й переміг у 2022?",o:["Kalush Orchestra","Джамала","Руслана"],h:"Пісня називається Stefania."}];
+const U=[
+{q:"Як правильно?",o:["приємний","приймний","приїмний"],h:"Згадай слово «приємність»."},
+{q:"Як правильно?",o:["щоденник","щодєнник","шчоденник"],h:"Це «що» + «день»."},
+{q:"Як правильно?",o:["з’їсти","зїсти","з їсти"],h:"Після префікса перед я, ю, є, ї ставимо апостроф."},
+{q:"Як правильно?",o:["м’яч","мяч","мйач"],h:"Апостроф стоїть після губного приголосного перед я."},
+{q:"Як правильно?",o:["розв’язати","розвязати","розв язати"],h:"Префікс роз- плюс «в’язати»."},
+{q:"Як правильно?",o:["об’єкт","обєкт","об єкт"],h:"Після префікса об- перед є ставимо апостроф."},
+{q:"Як правильно?",o:["пір’я","піря","пір’йа"],h:"Апостроф стоїть після р перед я."},
+{q:"Як правильно?",o:["бур’ян","бурян","бурйан"],h:"Після р перед я ставимо апостроф."}];
+const R=[
+{t:"Через воду він проводить, а сам з місця не сходить.",a:"міст"},
+{t:"Без рук, без ніг, а вікна малює.",a:"мороз"},
+{t:"Сто одежин, і всі без застібок.",a:"капуста"},
+{t:"Не звір, а має хвіст, клацає на столі.",a:"комп’ютерна миша"},
+{t:"Не вогонь, а палить.",a:"кропива"},
+{t:"Червоний ніс у землю вріс, а зелений хвіст нагору.",a:"морква"},
+{t:"Без рук, без ніг, а ворота відчиняє.",a:"вітер"},
+{t:"Сидить дід у ста шубах, хто його роздягає, той плаче.",a:"цибуля"}];
+function algQ(){const k=rnd(3);
+ if(k==0){const p=1+rnd(9),q=p+1+rnd(8);return{q:`Знайди більший корінь рівняння x² − ${p+q}x + ${p*q} = 0.`,ans:String(q),hint:`Теорема Вієта: сума коренів ${p+q}, добуток ${p*q}. Підбери два числа.`}}
+ if(k==1){const a=3+rnd(10),b=2+rnd(8);return{q:`Обчисли √${a*a} + √${b*b}.`,ans:String(a+b),hint:`Згадай таблицю квадратів: потрібні числа, що в квадраті дають ${a*a} і ${b*b}.`}}
+ const a=1+rnd(4),b=2+rnd(9),c=1+rnd(6);return{q:`Знайди дискримінант рівняння ${a}x² + ${b}x + ${c} = 0.`,ans:String(b*b-4*a*c),hint:`D = b² − 4ac, тут b² = ${b*b}.`}}
+function geoQ(){const k=rnd(4);
+ if(k==0){const t=pick([[3,4,5],[5,12,13],[8,15,17],[6,8,10]]);return{q:`Катети прямокутного трикутника дорівнюють ${t[0]} і ${t[1]}. Знайди гіпотенузу.<svg viewBox='0 0 130 90' width='150' style='display:block;margin:6px 0'><polygon points='10,80 120,80 10,10' fill='none' stroke='currentColor' stroke-width='2'/><text x='60' y='89' font-size='11' fill='currentColor'>${t[0]}</text><text x='0' y='48' font-size='11' fill='currentColor'>${t[1]}</text><text x='72' y='40' font-size='11' fill='currentColor'>?</text></svg>`,ans:String(t[2]),hint:`Теорема Піфагора: c² = a² + b² = ${t[0]*t[0]+t[1]*t[1]}.`}}
+ if(k==1){const x=50+rnd(8)*10;return{q:`Один кут паралелограма дорівнює ${x}°. Знайди сусідній кут (у градусах).`,ans:String(180-x),hint:"Сума сусідніх кутів паралелограма дорівнює 180°."}}
+ if(k==2){const a=3+rnd(8),b=a+2+rnd(8),h=2*(1+rnd(5));return{q:`Основи трапеції ${a} см і ${b} см, висота ${h} см. Знайди площу (см²).`,ans:String((a+b)*h/2),hint:"S = (a + b) / 2 · h."}}
+ const d=2*(2+rnd(6)),e=2*(2+rnd(6));return{q:`Діагоналі ромба дорівнюють ${d} см і ${e} см. Знайди площу (см²).`,ans:String(d*e/2),hint:"S = ½ · d₁ · d₂."}}
+function mathQ(){const a=2+rnd(8),b=3+rnd(8),c=5+rnd(40),k=rnd(3);
+ if(k==0)return{q:`${a} × ${b} + ${c}`,ans:a*b+c};
+ if(k==1)return{q:`(${a} + ${c}) × ${b}`,ans:(a+c)*b};
+ return{q:`${a*b+c} − ${a} × ${b}`,ans:c}}
+const TFH=[{q:'Незалежність України проголошено у 1991 році.',a:'Так'},{q:'Революція Гідності почалася у 2004 році.',a:'Ні'},{q:'Євро-2012 проходило в Україні та Польщі.',a:'Так'},{q:'Безвіз з ЄС Україна отримала у 2010 році.',a:'Ні'},{q:'Зеленський став президентом у 2019 році.',a:'Так'},{q:'Помаранчева революція була у 2013 році.',a:'Ні'}];
+const TFU=[{q:'Слово «з’їсти» пишеться з апострофом.',a:'Так'},{q:'Слово «м’яч» пишеться без апострофа.',a:'Ні'},{q:'У слові «пір’я» потрібен апостроф.',a:'Так'},{q:'Слово «щоденник» пишеться через «шч».',a:'Ні'},{q:'Слово «об’єкт» пишеться з апострофом.',a:'Так'}];
+const TFA=[{q:'(a + b)² = a² + 2ab + b².',a:'Так'},{q:'√(a²) = a для будь-якого числа a.',a:'Ні'},{q:'Рівняння x² = −4 має два корені.',a:'Ні'},{q:'Якщо D = 0, рівняння має один корінь.',a:'Так'},{q:'(a − b)² = a² − b².',a:'Ні'},{q:'Сума коренів рівняння x² − 5x + 6 = 0 дорівнює 5.',a:'Так'}];
+const TFG=[{q:'Діагоналі прямокутника рівні.',a:'Так'},{q:'Діагоналі паралелограма завжди перпендикулярні.',a:'Ні'},{q:'Сума кутів чотирикутника дорівнює 360°.',a:'Так'},{q:'У рівнобічній трапеції бічні сторони рівні.',a:'Так'},{q:'Будь-який ромб є квадратом.',a:'Ні'}];
+const GQ=[{q:'Чотирикутник, у якого лише дві сторони паралельні, — це…',o:['трапеція','паралелограм','ромб'],h:'Паралельні сторони називають основами.'},{q:'Діагоналі ромба…',o:['перпендикулярні','завжди рівні','паралельні'],h:'Вони ще й ділять кути ромба навпіл.'},{q:'Сума кутів чотирикутника дорівнює…',o:['360°','180°','270°'],h:'Розріж чотирикутник діагоналлю на два трикутники.'},{q:'Середня лінія трапеції дорівнює…',o:['півсумі основ','добутку основ','різниці основ'],h:'Це середнє арифметичне основ.'},{q:'У прямокутному трикутнику найдовша сторона — це…',o:['гіпотенуза','катет','висота'],h:'Вона лежить проти прямого кута.'}];
+const FILL=[['пр_вітання','и'],['ж_ття','и'],['д_ректор','и'],['т_плий','е'],['б_реза','е'],['в_сна','е'],['н_бо','е'],['пр_гожий','и']];
+const tf=(b,k,subj)=>{const x=take(b,k);return{subj,kind:'opt',q:'Правда чи ні? '+x.q,opts:['Так','Ні'],ans:x.a,val:'',hint:'Пригадай правило або дату з уроку.'}};
+const seqPick=(i,j)=>{const t=S.tasks[i];t.sel.push(t.items[j]);t.val=t.sel.join(' > ');render()};
+const seqReset=i=>{const t=S.tasks[i];t.sel=[];t.val='';render()};
+function histT(){const r=rnd(3);
+ if(r==0){const h=take(H,'H');return{subj:'Історія',kind:'opt',q:h.q,opts:shuffle(h.o),ans:h.o[0],val:'',hint:h.h}}
+ if(r==1)return tf(TFH,'TFH','Історія');
+ const E=[['Проголошення незалежності',1991],['Помаранчева революція',2004],['Євро-2012',2012],['Революція Гідності',2013],['Безвіз з ЄС',2017],['Статус кандидата в ЄС',2022]];
+ const pk=shuffle(E).slice(0,4).sort((a,b)=>a[1]-b[1]).map(x=>x[0]);
+ return{subj:'Історія',kind:'seq',q:'Розстав події від найранішої до найпізнішої (клікай по черзі):',items:shuffle(pk),sel:[],ans:pk.join(' > '),val:'',hint:`Найперша подія — «${pk[0]}».`}}
+function ukrT(){const r=rnd(3);
+ if(r==0){const u=take(U,'U');return{subj:'Укр. мова',kind:'opt',q:u.q,opts:shuffle(u.o),ans:u.o[0],val:'',hint:u.h}}
+ if(r==1){const f=take(FILL,'FILL');return{subj:'Укр. мова',kind:'num',q:`Встав пропущену літеру (и або е): ${f[0]}`,ans:f[1],val:'',hint:'Зміни форму слова так, щоб наголос упав на цей склад.'}}
+ return tf(TFU,'TFU','Укр. мова')}
+function algT(){const r=rnd(5);
+ if(r==0){const a=1+rnd(3),b=1+rnd(6),c=1+rnd(9),D=b*b-4*a*c;return{subj:'Алгебра',kind:'opt',q:`Скільки коренів має рівняння ${a}x² + ${b}x + ${c} = 0?`,opts:['0','1','2'],ans:D>0?'2':D==0?'1':'0',val:'',hint:'Порахуй D = b² − 4ac: D > 0 — два корені, D = 0 — один, D < 0 — жодного.'}}
+ if(r==1)return tf(TFA,'TFA','Алгебра');
+ const x=algQ();return{subj:'Алгебра',kind:'num',q:x.q,ans:x.ans,val:'',hint:x.hint}}
+function geoT(){const r=rnd(6);
+ if(r==0){const x=take(GQ,'GQ');return{subj:'Геометрія',kind:'opt',q:x.q,opts:shuffle(x.o),ans:x.o[0],val:'',hint:x.h}}
+ if(r==1)return tf(TFG,'TFG','Геометрія');
+ const x=geoQ();return{subj:'Геометрія',kind:'num',q:x.q,ans:x.ans,val:'',hint:x.hint}}
+function infT(){const r=rnd(4),T=(q,ans,hint)=>({subj:'Інформатика',kind:'txt',q,ans,val:'',hint});
+ if(r==0){const x=take(R,'R'),code=enc(x.t);return T(`Розшифруй коди (cp1251) і відгадай загадку: <span class='codes'>${code}</span>`,x.a,`Перший код ${code.split(' ')[0]} — це «${x.t[0]}». Далі за таблицею: 192 = А, 224 = а, 32 = пробіл.`)}
+ if(r==1){const w=pick(['кіт','дім','мама','школа','код','миша']);return T(`Запиши коди літер слова «${w}» через пробіл (cp1251).`,enc(w),`Перша літера «${w[0]}» має код ${enc(w[0])}. Інші знайди в таблиці.`)}
+ if(r==2){let k;do{k=192+rnd(64)}while([218,219,221,250,251,253].includes(k));return T(`Яка літера має код ${k} у таблиці cp1251?`,cp(k),k<224?'Великі літери мають коди 192–223.':'Малі літери мають коди 224–255.')}
+ const n=5+rnd(26);return T(`Переведи двійкове число ${n.toString(2)} у десяткову систему.`,String(n),'Розряди справа наліво: 1, 2, 4, 8, 16.')}
+function newRound(){
+ 
+ S.tasks=[
+ algT(),
+ geoT(),
+ histT(),
+ ukrT(),
+ infT(),
+ {subj:"Фізкультура",kind:"pe",q:"Зроби 10 присідань перед вебкамерою (зараховуються лише глибокі присідання, усією висотою тіла). Увімкни камеру, відкалібруй і присідай.",ans:"",val:0}];
+ $("#res").hidden=true;$("#tasks").hidden=false;$("#go").hidden=false;render()}
+function card(t,i){let b="";
+ if(t.kind=="opt")b=t.opts.map((o,j)=>`<button class="o ${t.val===o?"sel":""}" onclick="setOpt(${i},${j})">${o}</button>`).join("");
+ else if(t.kind=="seq")b=t.items.map((o,j)=>`<button class='o ${t.sel.includes(o)?'sel':''}' ${t.sel.includes(o)?'disabled':''} onclick='seqPick(${i},${j})'>${t.sel.includes(o)?(t.sel.indexOf(o)+1)+'. ':''}${o}</button>`).join('')+`<div class='row'><button onclick='seqReset(${i})'>Скинути порядок</button></div>`;
+ else if(t.kind=="pe")b=(cam.on?`<div id="vslot"></div><div class="row"><button onclick="calib()">Калібрувати</button><button onclick="resetPe()">Скинути лічильник</button><button onclick="camStop()">Вимкнути камеру</button></div><div class="hint" id="cst">${cam.msg}</div><b id="pc">Присідання: ${t.val}/10</b>`:`<div class="row"><button class="p" onclick="camStart()">Увімкнути камеру</button></div><b>Присідання: ${t.val}/10</b>${cam.msg?`<div class="hint">Увага: ${cam.msg}</div>`:""}`);
+ else b=`<input value="${t.val}" ${t.ai?"disabled":""} oninput="S.tasks[${i}].val=this.value" placeholder="Твоя відповідь">`+
+  "";
+ if(t.kind=="txt")b=`<div class="two"><div>${b}</div><div><b>Таблиця кодування</b><div id="tbw">${tbHtml()}</div></div></div>`;
+ const ai=t.kind=="pe"?"":`<div class="row"><button onclick="aiHint(${i})">ШІ: підказка</button><button onclick="aiAns(${i})">ШІ: відповідь</button></div>`;
+ return `<div class="card${t.kind=="txt"?" wide":""}"><h3>${t.subj}${t.ai?" (ШІ)":""}</h3><p>${t.q}</p>${b}${ai}${t.showHint?`<div class="hint">Підказка: ${t.hint}</div>`:""}</div>`}
+function render(){
+ $("#hud").innerHTML=`<span>День ${S.round}/${ROUNDS}</span><span>Гроші: ${S.money} ₴</span><span>Комп’ютер: ${S.price} ₴</span>`;
+ $("#bar").style.width=Math.min(100,S.money/S.price*100)+"%";$("#note").textContent=S.note;
+ $("#tasks").innerHTML=S.tasks.map(card).join("");const vs=$("#vslot");if(vs){vs.appendChild(vid);vid.play().catch(()=>{})}}
+const setOpt=(i,j)=>{S.tasks[i].val=S.tasks[i].opts[j];render()};
+const pe=i=>{const t=S.tasks[i];t.val=Math.min(10,t.val+1);render()};
+const aiHint=i=>{S.tasks[i].showHint=true;render()};
+function aiAns(i){const t=S.tasks[i];if(t.ai)return;t.ai=true;t.val=t.ans;if(t.sel)t.sel=t.ans.split(' > ');
+ const d=Math.random()<.6?10+rnd(30):120+rnd(100);S.price+=d;
+ S.note=`ШІ відповів, але комп’ютер подорожчав на ${d} ₴.`;render()}
+function dec(el){el.nextElementSibling.textContent=el.value.split(/\s+/).filter(Boolean).map(c=>cp(+c)).join("")}
+const norm=v=>String(v??"").toLowerCase().replace(/[’'ʼ`]/g,"").replace(/\s+/g," ").trim();
+function submit(){const miss=S.tasks.filter(t=>t.kind=='pe'?t.val<10:t.kind=='seq'?t.sel.length<t.items.length:!String(t.val||'').trim());
+ if(miss.length){S.note='Ще не виконано: '+miss.map(t=>t.subj).join(', ')+'. Поки не зробиш усе, домашку не здати.';render();window.scrollTo({top:0,behavior:'smooth'});return}
+ S.note='';
+ const who=Math.random()<.5?"dad":"mom",fav=who=="dad"?DAD:MOM;let sum=0;
+ const rows=S.tasks.map(t=>{const ok=t.kind=="pe"?t.val>=10:norm(t.val)===norm(t.ans),f=fav.includes(t.subj);
+  const d=ok?(f?BONUS:BASE):(f?-FINE:0);sum+=d;
+  return `<tr><td>${t.subj}${f?" (бонус)":""}</td><td>${ok?"Вірно":"Помилка"}${t.ai?" (ШІ)":""}</td><td class="${d<0?"neg":"pos"}">${d>0?"+":""}${d} ₴</td></tr>`}).join("");
+ S.money=Math.max(0,S.money+sum);S.note="";
+ const win=S.money>=S.price,end=S.round>=ROUNDS;
+ let msg=`Сьогодні перевіряв(ла): <b>${who=="dad"?"тато (алгебра, геометрія, історія)":"мама (укр. мова й інформатика)"}</b>`;
+ let btn=`<button class="p" onclick="S.round++;newRound()">Наступний день</button>`;
+ if(win){msg+=`<h3>Комп’ютер куплено! Тепер можна їхати на турнір.</h3>`;btn=`<button class="p" onclick="restart()">Грати знову</button>`}
+ else if(end){msg+=`<h3>Турнір пройде без тебе: не вистачило ${S.price-S.money} ₴.</h3>`;btn=`<button class="p" onclick="restart()">Спробувати ще</button>`}
+ $("#tasks").hidden=true;$("#go").hidden=true;render();
+ $("#res").hidden=false;
+ $("#res").innerHTML=`<p>${msg}</p><table>${rows}</table><p><b>Разом за день: <span class="${sum<0?"neg":"pos"}">${sum>0?"+":""}${sum} ₴</span></b></p>${btn}`}
+function restart(){Object.assign(S,{round:1,money:0,price:PRICE0,note:""});newRound()}
+const tbk=[165,170,175,178,179,180,186,191];for(let k=192;k<=255;k++)tbk.push(k);
+const TBS={p:3,bin:false};
+const td=(()=>{try{return new TextDecoder("windows-1251")}catch(e){return null}})();
+function chr(k){if(k==32)return"пр.";if(k==127)return"DEL";if(k==152)return"□";if(k==160)return"nbsp";if(k==173)return"shy";if(k<128)return String.fromCharCode(k);return td?td.decode(new Uint8Array([k])):cp(k)}
+function tbHtml(){const L=TBS.p==0?[...tbk.slice(8),...tbk.slice(0,8)]:Array.from({length:TBS.p==1?96:TBS.p==2?128:224},(_,i)=>(TBS.p==2?128:32)+i);let c="";for(const k of L){const bn=k.toString(2).padStart(8,"0");c+=`<span title="${bn}"><b>${chr(k)}</b> ${k}${TBS.bin?" "+bn:""}</span>`}
+ return `<div class="row"><button class="${TBS.p==3?"p":""}" onclick="tbTab(3)">Усі (32–255)</button><button class="${TBS.p==0?"p":""}" onclick="tbTab(0)">Українські літери</button><button class="${TBS.p==1?"p":""}" onclick="tbTab(1)">Частина 1 (32–127)</button><button class="${TBS.p==2?"p":""}" onclick="tbTab(2)">Частина 2 (128–255)</button></div><label class="hint" style="display:block;margin:6px 0"><input type="checkbox" ${TBS.bin?"checked":""} onchange="TBS.bin=this.checked;tbTab(TBS.p)" style="width:auto"> показати двійковий код</label><div class="tb${TBS.bin?" bin":""}${TBS.p==3?" scr":""}">${c}</div>`}
+function tbTab(p){TBS.p=p;const w=$("#tbw");if(w)w.innerHTML=tbHtml()}
+const cam={on:false,msg:"",stream:null,bg:null,state:"up",base:null,raf:0},vid=document.createElement("video");
+vid.autoplay=true;vid.muted=true;vid.playsInline=true;
+const cv=document.createElement("canvas"),cx=cv.getContext("2d",{willReadFrequently:true});cv.width=64;cv.height=48;
+function grab(){cx.drawImage(vid,0,0,64,48);const d=cx.getImageData(0,0,64,48).data,g=new Uint8Array(3072);for(let i=0;i<3072;i++)g[i]=(d[i*4]+d[i*4+1]+d[i*4+2])/3;return g}
+async function camStart(){
+ try{cam.stream=await navigator.mediaDevices.getUserMedia({video:{width:320,height:240}})}
+ catch(e){const n=(e&&e.name)||'';const why={NotAllowedError:'Камеру заблоковано. Натисни значок замка біля адреси, дозволь камеру й онови сторінку. Якщо сторінка відкрита всередині чужого сайту або переглядача, відкрий її напряму.',NotFoundError:'Камеру не знайдено.',NotReadableError:'Камеру вже використовує інша програма (Discord, Zoom, інша вкладка). Закрий її і спробуй ще раз.',TypeError:'Камера працює лише на захищеній адресі https:// або з локального файлу. Відкрий сторінку через GitHub Pages (https://…github.io/…).'}[n]||'Невідома помилка.';cam.msg='Камера не запустилась ('+(n||'помилка')+'). '+why;render();return}
+ vid.srcObject=cam.stream;cam.on=true;cam.bg=null;cam.state="up";cam.base=null;
+ cam.msg="Відійди від кадру й натисни «Калібрувати», потім стань у кадр на повний зріст і присідай.";S.note="";render();loop()}
+function resetPe(){S.tasks[5].val=0;const p=$("#pc");if(p)p.textContent="Присідання: 0/10";cam.state="up";cam.m=null}
+function camStop(){cancelAnimationFrame(cam.raf);if(cam.stream)cam.stream.getTracks().forEach(t=>t.stop());cam.stream=null;cam.on=false;cam.msg="";render()}
+function calib(){if(vid.readyState<2||cam.cd)return;cam.bg=null;let n=5;const say=t=>{const e=$("#cst");if(e)e.textContent=t};
+ cam.cd=setInterval(()=>{if(!cam.on){clearInterval(cam.cd);cam.cd=0;return}
+  if(n>0){say(`Відійди повністю з кадру! Калібрування через ${n}…`);n--;return}
+  clearInterval(cam.cd);cam.cd=0;cam.bg=grab();cam.state="up";cam.m=null;cam.s=null;cam.fr=0;cam.H0=null;cam.hs=null;cam.b0=null;
+  say("Готово! Тепер стань у кадр на повний зріст і присідай.")},1000);say("Відійди повністю з кадру! Калібрування через 5…")}
+function loop(){cam.raf=requestAnimationFrame(loop);
+ if(!cam.on||!cam.bg||vid.readyState<2)return;
+ const g=grab(),W=64,H=48;let n=0,top=-1,bot=-1;
+ for(let y=0;y<H;y++){let c=0;for(let x=0;x<W;x++)if(Math.abs(g[y*W+x]-cam.bg[y*W+x])>28)c++;if(c>=6){if(top<0)top=y;bot=y}n+=c}
+ const e=$('#cst'),t=S.tasks[5],now=performance.now();cam.fr++;
+ if(n<80||top<0||bot-top<10){if(e&&cam.fr%15==0)e.textContent='Не бачу тебе повністю. Відійди далі, щоб було видно голову й ноги.';return}
+ const h=bot-top;cam.hs=cam.hs==null?h:cam.hs*.5+h*.5;
+ if(cam.H0==null||cam.hs>cam.H0)cam.H0=cam.hs;else cam.H0-=(cam.H0-cam.hs)*.0007;
+ if(cam.b0==null)cam.b0=bot;
+ const ratio=cam.hs/cam.H0;
+ if(cam.state=='up'){cam.b0+=(bot-cam.b0)*.05;if(ratio<.8&&Math.abs(bot-cam.b0)<5){cam.state='down';cam.t0=now}}
+ else if(Math.abs(bot-cam.b0)>7||now-cam.t0>6000)cam.state='up';
+ else if(ratio>.92){cam.state='up';if(now-cam.t0>400&&t.val<10){t.val++;const p=$('#pc');if(p)p.textContent=`Присідання: ${t.val}/10${t.val>=10?' Готово!':''}`}}
+ if(e&&cam.fr%10==0)e.textContent=`Бачу тебе. ${cam.state=='down'?'Внизу. Тепер вставай повністю.':'Вгорі. Присідай глибоко.'}`}
+newRound();
+</script></body></html>
