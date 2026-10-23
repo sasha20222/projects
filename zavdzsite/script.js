@@ -1,10 +1,6 @@
-let phrases = ["Ярік дяка що сидиш з мною в дс","Юра поганець","Ехіч математик"]
-function say() {
- 
-
-let i = Math.floor(Math.random() * phrases.length);
-return phrases[i];
+let price = 10;
+let coins = 1;
+for (let i = 0; i < price; i++, coins * 2) [i];
+{
+  console.log(`Рівень ${price}: ${(price *= coins)} монет`);
 }
-console.log(say());
-console.log(say());
-console.log(say());

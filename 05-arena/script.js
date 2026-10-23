@@ -50,3 +50,6 @@ function teach() {
   moder.push("Тепер я зліше!");
   alert(`Тепер юра знає ${moder.length} фрази`);
 }
+function combo() {
+  banseco;
+}
