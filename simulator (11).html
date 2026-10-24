@@ -93,7 +93,7 @@ const GQ=[{q:'Чотирикутник, у якого лише дві сторо
 const FILL=[['пр_вітання','и'],['ж_ття','и'],['д_ректор','и'],['т_плий','е'],['б_реза','е'],['в_сна','е'],['н_бо','е'],['пр_гожий','и']];
 const tf=(b,k,subj)=>{const x=take(b,k);return{subj,kind:'opt',q:'Правда чи ні? '+x.q,opts:['Так','Ні'],ans:x.a,val:'',hint:'Пригадай правило або дату з уроку.'}};
 const seqPick=(i,j)=>{const t=S.tasks[i];t.sel.push(t.items[j]);t.val=t.sel.join(' > ');render()};
-const toggleTb=()=>{S.tb=!S.tb;render()};const go=d=>{S.cur=Math.max(0,Math.min(S.tasks.length-1,S.cur+d));render();window.scrollTo({top:0,behavior:'smooth'})};const isDone=t=>t.kind=='pe'?t.val>=t.need:t.kind=='seq'?t.sel.length>=t.items.length:!!String(t.val||'').trim();
+const toggleTb=()=>{S.tb=!S.tb;render()};const go=d=>{S.cur=Math.max(0,Math.min(S.tasks.length-1,S.cur+d));render();window.scrollTo({top:0,behavior:'smooth'})};const isDone=t=>t.kind=='pe'?(t.skip||t.val>=t.need):t.kind=='seq'?t.sel.length>=t.items.length:!!String(t.val||'').trim();
 const seqReset=i=>{const t=S.tasks[i];t.sel=[];t.val='';render()};
 function histT(){const r=rnd(3);
  if(r==0){const h=take(H,'H');return{subj:'Історія',kind:'opt',q:h.q,opts:shuffle(h.o),ans:h.o[0],val:'',hint:h.h}}
@@ -234,6 +234,14 @@ const NOHINT='Відкрий «Теорія»: там є потрібні тег
 ['Напиши CSS: для всієї сторінки шрифт Arial і темно-зелений колір тексту (darkgreen).',['Шрифт сторінки Arial','Колір тексту темно-зелений']],
 ['Напиши CSS: найбільший заголовок по центру і синього кольору.',['Заголовок по центру','Заголовок синього кольору']]
 ].forEach((n,i)=>{CODE[i].q=n[0];CODE[i].c.forEach((c,j)=>c[1]=n[1][j]);CODE[i].h=NOHINT});
+const PEQ=[{q:'Що робить розминка?',o:['готує м’язи й суглоби до навантаження','збільшує втому','замінює сніданок']},{q:'Скільки хвилин руху на день радять школярам щонайменше?',o:['60','5','300']},{q:'Що таке пульс?',o:['число ударів серця за хвилину','швидкість бігу','довжина кроку']},{q:'Що робити, якщо під час вправи з’явився різкий біль?',o:['зупинитися','терпіти','збільшити навантаження']},{q:'Що краще пити під час тренування?',o:['воду','солодку газовану воду','нічого не можна']},{q:'Яка вправа зміцнює м’язи ніг?',o:['присідання','ковтання слини','кліпання очима']},{q:'Що таке заминка після тренування?',o:['плавне зниження навантаження','додаткові швидкі вправи','найбільше навантаження']},{q:'Яке взуття підходить для уроку фізкультури?',o:['спортивне','туфлі на підборах','шльопанці']},{q:'Яка вправа розвиває гнучкість?',o:['нахили','жим штанги','стрибки в довжину']},{q:'Скільки разів на тиждень корисно займатися спортом?',o:['3–4 рази','раз на рік','щодня по 8 годин']}];
+const askSkip=t=>{t.skipQ=take(PEQ,'PEQ');t.skipOpts=shuffle(t.skipQ.o)};
+const skipPe=i=>{const t=S.tasks[i];if(t.skip){t.skip=false;t.skipQ=null;t.skipMsg='';render();return}if(t.skipQ){t.skipQ=null;t.skipMsg='';render();return}askSkip(t);render()};
+const skipAns=(i,j)=>{const t=S.tasks[i];if(t.skipOpts[j]===t.skipQ.o[0]){t.skip=true;t.skipQ=null;t.skipMsg='';if(cam.on)camStop()}else{t.skipMsg='Невірно. Ось інше питання, або зроби вправу.';askSkip(t)}render()};
+function skipUI(t,i){
+ if(t.skip)return `<div class='hint'>Пропущено: нагороди за фізкультуру не буде.</div><div class='row'><button onclick='skipPe(${i})'>Скасувати пропуск</button></div>`;
+ if(t.skipQ)return `<div class='hint' style='margin-top:10px'>${t.skipMsg||'Щоб пропустити фізкультуру, відповідай на питання:'}</div><div style='margin:6px 0'><b>${t.skipQ.q}</b></div>${t.skipOpts.map((o,j)=>`<button class='o' onclick='skipAns(${i},${j})'>${o}</button>`).join('')}<div class='row'><button onclick='skipPe(${i})'>Не пропускати, зроблю вправу</button></div>`;
+ return `<div class='row'><button onclick='skipPe(${i})'>Пропустити фізкультуру (відповісти на питання)</button></div>`}
 function newRound(){
  
  S.tasks=genDay();
@@ -246,6 +254,7 @@ function card(t,i){let b="";
  else b=`<input value="${String(t.val).replace(/"/g,'&quot;')}" ${t.ai?"disabled":""} oninput="S.tasks[${i}].val=this.value" placeholder="Твоя відповідь">`+
   "";
  if(t.kind=="txt")b=`${b}<div class='row'><button onclick='toggleTb()'>${S.tb?'Сховати таблицю кодів':'Показати таблицю кодів'}</button></div>${S.tb?`<div id='tbw' style='margin-top:8px'>${tbHtml()}</div>`:''}`;
+ if(t.kind=="pe")b+=skipUI(t,i);
  const ai=`<div class='row'><button class='${S.th===t.subj?'p':''}' onclick='toggleTh(${i})'>${S.th===t.subj?'Сховати теорію':'Теорія'}</button>${t.kind=='pe'?'':`<button onclick='aiHint(${i})'>ШІ: підказка</button><button onclick='aiAns(${i})'>ШІ: відповідь</button>`}</div>${S.th===t.subj?`<div class='theory'>${TH[t.subj]||''}</div>`:''}`;
  return `<div class="card${t.kind=="txt"?" wide":""}"><h3>${t.subj}${t.ai?" (ШІ)":""}</h3><p>${t.q}</p>${b}${ai}${t.showHint?`<div class="hint">Підказка: ${t.hint}</div>`:""}</div>`}
 function render(){
@@ -262,13 +271,13 @@ function aiAns(i){const t=S.tasks[i];if(t.ai)return;t.ai=true;t.val=t.ans.split(
  S.note=`ШІ відповів, але комп’ютер подорожчав на ${d} ₴.`;render()}
 function dec(el){el.nextElementSibling.textContent=el.value.split(/\s+/).filter(Boolean).map(c=>cp(+c)).join("")}
 const norm=v=>String(v??"").toLowerCase().replace(/[’'ʼ`]/g,"").replace(/\s+/g," ").trim();
-function submit(){const miss=S.tasks.filter(t=>t.kind=='pe'?t.val<t.need:t.kind=='seq'?t.sel.length<t.items.length:!String(t.val||'').trim());
+function submit(){const miss=S.tasks.filter(t=>t.kind=='pe'?(!t.skip&&t.val<t.need):t.kind=='seq'?t.sel.length<t.items.length:!String(t.val||'').trim());
  if(miss.length){S.note='Ще не виконано: '+[...new Set(miss.map(t=>t.subj))].map(s=>s+' ('+miss.filter(t=>t.subj==s).length+')').join(', ')+'. Поки не зробиш усе, домашку не здати.';S.cur=S.tasks.indexOf(miss[0]);render();window.scrollTo({top:0,behavior:'smooth'});return}
  S.note='';
  const who=Math.random()<.5?"dad":"mom",fav=who=="dad"?DAD:MOM;let sum=0;
  const rows=[...new Set(S.tasks.map(t=>t.subj))].map(sj=>{const g=S.tasks.filter(t=>t.subj==sj),f=fav.includes(sj);let good=0,d=0;
-  g.forEach(t=>{const ok=t.kind=="pe"?t.val>=t.need:t.kind=="code"?t.chk(t.val||''):t.ans.split('|').map(norm).includes(norm(t.val));if(ok)good++;d+=(ok?(f?BONUS:BASE):(f?-FINE:0))*(t.kind=="pe"?1:.1)});d=Math.round(d);sum+=d;const ai=g.filter(t=>t.ai).length;
-  return `<tr><td>${sj}${f?" (бонус)":""}</td><td>${good} з ${g.length}${ai?" (ШІ: "+ai+")":""}</td><td class="${d<0?"neg":"pos"}">${d>0?"+":""}${d} ₴</td></tr>`}).join("");
+  g.forEach(t=>{const ok=t.kind=="pe"?(!t.skip&&t.val>=t.need):t.kind=="code"?t.chk(t.val||''):t.ans.split('|').map(norm).includes(norm(t.val));if(ok)good++;d+=(ok?(f?BONUS:BASE):(f?-FINE:0))*(t.kind=="pe"?1:.1)});d=Math.round(d);sum+=d;const ai=g.filter(t=>t.ai).length;
+  return `<tr><td>${sj}${f?" (бонус)":""}</td><td>${good} з ${g.length}${g[0].skip?" (пропущено)":""}${ai?" (ШІ: "+ai+")":""}</td><td class="${d<0?"neg":"pos"}">${d>0?"+":""}${d} ₴</td></tr>`}).join("");
  S.money=Math.max(0,S.money+sum);S.note="";
  const win=S.money>=S.price,end=S.round>=ROUNDS;
  let msg=`Сьогодні перевіряв(ла): <b>${who=="dad"?"тато (алгебра, геометрія, історія)":"мама (укр. мова, англійська, інформатика)"}</b>`;
