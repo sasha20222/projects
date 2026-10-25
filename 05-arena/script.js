@@ -56,8 +56,12 @@ function combo() {
   }
   alert(`Комбо! юра: ${bansec} HP`);
 }
-function frazy() {
-  for (let text = 0; i < moder.length; i++) {
-  text+= 9
-  }  alert(`moder${"Дам тобі пермач", "Бійся", "Я тебе забаню}`);
 
+let text = "";
+function frazy() {
+  text = "";
+  for (let i = 0; i < moder.length; i++) {
+    text += moder[i] + " ";
+  }
+  alert(`${text}`);
+}
