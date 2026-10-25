@@ -51,5 +51,13 @@ function teach() {
   alert(`Тепер юра знає ${moder.length} фрази`);
 }
 function combo() {
-  banseco;
+  for (let i = 0; i < 8; i++) {
+    bansec = banseco(bansec, upgrade(myLvl));
+  }
+  alert(`Комбо! юра: ${bansec} HP`);
 }
+function frazy() {
+  for (let text = 0; i < moder.length; i++) {
+  text+= 9
+  }  alert(`moder${"Дам тобі пермач", "Бійся", "Я тебе забаню}`);
+
