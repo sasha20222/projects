@@ -1,6 +1,7 @@
 let boss = {
   name: "юра",
   hp: 25000,
+  dizlaik: "yes",
 };
 let moder = ["Дам тобі пермач", "Бійся", "Я тебе забаню"];
 function say() {
