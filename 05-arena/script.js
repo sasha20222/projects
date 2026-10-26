@@ -3,6 +3,9 @@ let boss = {
   hp: 25000,
   dizlaik: "yes",
 };
+function Boss() {
+  alert(`${boss.name} ${boss.hp} ${boss.dizlaik}`);
+}
 let moder = ["Дам тобі пермач", "Бійся", "Я тебе забаню"];
 function say() {
   return moder[Math.floor(Math.random() * moder.length)];
