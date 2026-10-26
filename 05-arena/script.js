@@ -13,9 +13,15 @@ function wave() {
   let text = "";
   for (let m of moderi) {
     m.hp = banseco(m.hp, upgrade(myLvl));
-    text += `${m.name}: ${m.hp} HP `;
+    if (m.hp > 0) {
+      alive += 1;
+      text += `${m.name}: ${m.hp} HP `;
+    }
   }
   alert(text);
+  if (alive === 0) {
+    alert("Усіх мобів переможено! ");
+  }
 }
 
 function Boss() {
