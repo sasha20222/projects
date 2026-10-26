@@ -11,6 +11,7 @@ let moderi = [
 
 function wave() {
   let text = "";
+  let alive = 0;
   for (let m of moderi) {
     m.hp = banseco(m.hp, upgrade(myLvl));
     if (m.hp > 0) {
