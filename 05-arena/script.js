@@ -3,6 +3,21 @@ let boss = {
   hp: 25000,
   dizlaik: "yes",
 };
+let moderi = [
+  { name: "btnep", hp: 899 },
+  { name: "pikachy", hp: 999 },
+  { name: "bisenyn", hp: 99 },
+];
+
+function wave() {
+  let text = "";
+  for (let m of moderi) {
+    m.hp = banseco(m.hp, upgrade(myLvl));
+    text += `${m.name}: ${m.hp} HP `;
+  }
+  alert(text);
+}
+
 function Boss() {
   alert(`${boss.name} ${boss.hp} ${boss.dizlaik}`);
 }
