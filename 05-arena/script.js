@@ -9,11 +9,11 @@ let hilka = [
   { name: "Дзвінок ехічу", price: 15, heal: 66 },
   { name: "Смс тайменду", price: 50, heal: 88 },
 ];
+hilka.push({ name: "Нове зілля", price: 20, heal: 40 });
 function zbir() {
   let text = "";
   for (let v of hilka) {
     text += `${v.name} — ${v.price} монет\n`;
-    hilka.push(`loop`);
   }
   alert(text);
 }
