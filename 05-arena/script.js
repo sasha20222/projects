@@ -3,6 +3,31 @@ let boss = {
   hp: 25000,
   dizlaik: "yes",
 };
+let coins = 56;
+let hilka = [
+  { name: "Пермач юрі", price: 66, heal: 25 },
+  { name: "Дзвінок ехічу", price: 15, heal: 66 },
+  { name: "Смс тайменду", price: 50, heal: 88 },
+];
+function zbir() {
+  let text = "";
+  for (let v of hilka) {
+    text += `${v.name} — ${v.price} монет\n`;
+    hilka.push(`loop`);
+  }
+  alert(text);
+}
+function buy(k) {
+  let item = hilka[k]; // беремо картку під номером k
+  if (coins >= item.price) {
+    // вистачає монет?
+    coins -= item.price; // так: мінус ціна
+    boss.hp += item.heal;
+    alert(`Купив ${item.name}! Монет: ${coins}`);
+  } else {
+    alert("Не вистачає монет"); // ні: нічого не міняємо
+  }
+}
 let moderi = [
   { name: "btnep", hp: 899 },
   { name: "pikachy", hp: 999 },
