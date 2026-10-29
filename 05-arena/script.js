@@ -6,8 +6,8 @@ let boss = {
 let coins = 56;
 let hilka = [
   { name: "Пермач юрі", price: 66, heal: 25 },
-  { name: "Дзвінок ехічу", price: 15, heal: 66 },
-  { name: "Смс тайменду", price: 50, heal: 88 },
+  { name: "Дзвінок Ехічу", price: 15, heal: 66 },
+  { name: "Смс Тайменду", price: 50, heal: 88 },
 ];
 hilka.push({ name: "Нове зілля", price: 20, heal: 40 });
 function zbir() {
@@ -37,6 +37,8 @@ let moderi = [
 function wave() {
   let text = "";
   let alive = 0;
+  let was = m.hp;
+  if (was > 0 && m.hp === 0) coins += 50;
   for (let m of moderi) {
     m.hp = banseco(m.hp, upgrade(myLvl));
     if (m.hp > 0) {
