@@ -1,8 +1,20 @@
+let hero = { name: "Сашко", hp: 30000 };
 let boss = {
   name: "юра",
   hp: 25000,
   dizlaik: "yes",
+  power: 677,
 };
+function biy() {
+  let text = "";
+  for (let r = 1; r <= 3; r++) {
+    boss.hp = banseco(boss.hp, upgrade(myLvl));
+    hero.hp = banseco(hero.hp, boss.power);
+    text += `Раунд ${r}: герой — ${hero.hp} HP, ${boss.name} — ${boss.hp} HP\n`;
+  }
+  alert(text);
+}
+
 let coins = 56;
 let hilka = [
   { name: "Пермач юрі", price: 66, heal: 25 },
