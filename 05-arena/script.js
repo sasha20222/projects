@@ -7,20 +7,14 @@ let boss = {
 };
 function biy() {
   let text = "";
-  for (let r = 1; r <= 3; r++) {
+  let r = 1;
+  while (hero.hp > 0 && boss.hp > 0) {
     boss.hp = banseco(boss.hp, upgrade(myLvl));
-    hero.hp = banseco(hero.hp, boss.power);
-    text += `Раунд ${r}: герой — ${hero.hp} HP, ${boss.name} — ${boss.hp} HP\n`;
-    let g = 1;
-    while (hero.hp > 0 && boss.hp > 0) {
-      boss.hp = banseco(boss.hp, upgrade(myLvl));
+    if (boss.hp > 0) {
       hero.hp = banseco(hero.hp, boss.power);
-      console.log(`Раунд ${g}: бос ${boss.hp}, герой ${hero.hp}`);
-      g += 1;
     }
-  }
-  if (boss.hp > 0) {
-    hero.hp = hit();
+    text += `Раунд ${r}: герой ${hero.hp}, ${boss.name} ${boss.hp}\n`;
+    r += 1;
   }
   alert(text);
 }
