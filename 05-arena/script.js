@@ -137,3 +137,9 @@ function frazy() {
   }
   alert(`${text}`);
 }
+function ready() {
+  const hp = document.querySelector("#hp");
+  console.log(hp);
+  const nick = document.querySelector("#nick");
+  console.log(nick);
+}
