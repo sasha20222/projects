@@ -53,9 +53,10 @@ let moderi = [
 function wave() {
   let text = "";
   let alive = 0;
-  let was = m.hp;
+
   if (was > 0 && m.hp === 0) coins += 50;
   for (let m of moderi) {
+    let was = m.hp;
     m.hp = banseco(m.hp, upgrade(myLvl));
     if (m.hp > 0) {
       alive += 1;
@@ -91,6 +92,7 @@ function hit() {
   }
   alert(`${boss.name}: ${boss.hp} HP. ${say()}`);
 }
+showBoss();
 
 let myLvl = 1;
 function levelUp() {
@@ -118,6 +120,7 @@ function strongHit() {
   }
   alert(`${boss.name}: ${boss.hp} HP. ${say()}`);
 }
+showBoss();
 function teach() {
   moder.push("Тепер я зліше!");
   alert(`Тепер ${boss.name} знає ${moder.length} фрази`);
@@ -144,8 +147,17 @@ function ready() {
   const nick = document.querySelector("#nick");
   hero.name = nick.value;
   console.log(nick);
-  const status = document.querySelector("#status");
-  status.textContent = `Герой ${hero.name} готовий з ${hero.hp} HP`;
-  const bossHp = document.querySelector("#bossHp");
-  bossHp.textContent = `${boss.name}: ${boss.hp} HP`;
 }
+function showBoss() {
+  const bossBar = document.querySelector("#bossBar");
+  const bossHp = document.querySelector("#bossHp");
+  bossBar.style.width = boss.hp / 100 + "px";
+  if (boss.hp < 5000) {
+    bossBar.classList.add("low");
+    const status = document.querySelector("#status");
+    status.textContent = `Герой ${hero.name} готовий з ${hero.hp} HP`;
+    const bossHp = document.querySelector("#bossHp");
+    bossHp.textContent = `${boss.name}: ${boss.hp} HP`;
+  }
+}
+showBoss();
