@@ -146,4 +146,6 @@ function ready() {
   console.log(nick);
   const status = document.querySelector("#status");
   status.textContent = `Герой ${hero.name} готовий з ${hero.hp} HP`;
+  const bossHp = document.querySelector("#bossHp");
+  bossHp.textContent = `${boss.name}: ${boss.hp} HP`;
 }
