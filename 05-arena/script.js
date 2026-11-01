@@ -139,7 +139,11 @@ function frazy() {
 }
 function ready() {
   const hp = document.querySelector("#hp");
+  hero.hp = Number(hp.value);
   console.log(hp);
   const nick = document.querySelector("#nick");
+  hero.name = nick.value;
   console.log(nick);
+  const status = document.querySelector("#status");
+  status.textContent = `Герой ${hero.name} готовий з ${hero.hp} HP`;
 }
