@@ -91,8 +91,8 @@ function hit() {
     alert(`${boss.name}: ${boss.hp} HP`);
   }
   alert(`${boss.name}: ${boss.hp} HP. ${say()}`);
+  showBoss();
 }
-showBoss();
 
 let myLvl = 1;
 function levelUp() {
@@ -119,8 +119,9 @@ function strongHit() {
     alert(`${boss.name}: ${boss.hp} HP`);
   }
   alert(`${boss.name}: ${boss.hp} HP. ${say()}`);
+  showBoss();
 }
-showBoss();
+
 function teach() {
   moder.push("Тепер я зліше!");
   alert(`Тепер ${boss.name} знає ${moder.length} фрази`);
