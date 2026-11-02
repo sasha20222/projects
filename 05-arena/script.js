@@ -54,10 +54,10 @@ function wave() {
   let text = "";
   let alive = 0;
 
-  if (was > 0 && m.hp === 0) coins += 50;
   for (let m of moderi) {
     let was = m.hp;
     m.hp = banseco(m.hp, upgrade(myLvl));
+    if (was > 0 && m.hp === 0) coins += 50;
     if (m.hp > 0) {
       alive += 1;
       text += `${m.name}: ${m.hp} HP `;
@@ -168,5 +168,8 @@ function showBoss() {
   if (boss.hp === 0) {
     bossBar.classList.add("dead");
   }
-  showBoss();
 }
+showBoss();
+document.querySelector("#hit").addEventListener("click", hit);
+document.querySelector("#strongHit").addEventListener("click", strongHit);
+document.querySelector("#shield").addEventListener("click", shield);
