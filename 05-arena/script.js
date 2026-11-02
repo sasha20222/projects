@@ -148,6 +148,8 @@ function ready() {
   const nick = document.querySelector("#nick");
   hero.name = nick.value;
   console.log(nick);
+  const status = document.querySelector("#status");
+  status.textContent = `Герой ${hero.name} готовий з ${hero.hp} HP`;
 }
 
 function shield() {
@@ -160,11 +162,8 @@ function showBoss() {
   bossBar.style.width = boss.hp / 100 + "px";
   if (boss.hp < 5000) {
     bossBar.classList.add("low");
-    const status = document.querySelector("#status");
-    status.textContent = `Герой ${hero.name} готовий з ${hero.hp} HP`;
-    const bossHp = document.querySelector("#bossHp");
-    bossHp.textContent = `${boss.name}: ${boss.hp} HP`;
   }
+  bossHp.textContent = `${boss.name}: ${boss.hp} HP`;
   if (boss.hp === 0) {
     bossBar.classList.add("dead");
   }
@@ -173,3 +172,14 @@ showBoss();
 document.querySelector("#hit").addEventListener("click", hit);
 document.querySelector("#strongHit").addEventListener("click", strongHit);
 document.querySelector("#shield").addEventListener("click", shield);
+document.querySelector("#ready").addEventListener("click", ready);
+document.querySelector("#buy2").addEventListener("click", buy(2));
+document.querySelector("#biy").addEventListener("click", biy());
+document.querySelector("#teach").addEventListener("click", teach);
+document.querySelector("#combo").addEventListener("click", combo);
+document.querySelector("#frazy").addEventListener("click", frazy);
+document.querySelector("#Boss").addEventListener("click", Boss);
+document.querySelector("#wave").addEventListener("click", wave);
+document.querySelector("#zbir").addEventListener("click", zbir);
+document.querySelector("#buy0").addEventListener("click", buy(0));
+document.querySelector("#buy1").addEventListener("click", buy(1));
