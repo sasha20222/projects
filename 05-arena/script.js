@@ -149,6 +149,11 @@ function ready() {
   hero.name = nick.value;
   console.log(nick);
 }
+
+function shield() {
+  document.querySelector("img").classList.toggle("shield");
+}
+
 function showBoss() {
   const bossBar = document.querySelector("#bossBar");
   const bossHp = document.querySelector("#bossHp");
@@ -160,5 +165,8 @@ function showBoss() {
     const bossHp = document.querySelector("#bossHp");
     bossHp.textContent = `${boss.name}: ${boss.hp} HP`;
   }
+  if (boss.hp === 0) {
+    bossBar.classList.add("dead");
+  }
+  showBoss();
 }
-showBoss();

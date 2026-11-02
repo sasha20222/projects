@@ -5,3 +5,10 @@
 .low {
   background: crimson;
 }
+.shield {
+  outline: 6px solid gold;
+}
+.dead {
+  filter: grayscale(1);
+  opacity: 0.5;
+}
