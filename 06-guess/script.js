@@ -1,6 +1,7 @@
 let secret = Math.floor(Math.random() * 100) + 1;
 let tries = 0;
-document.querySelector("#history").textContent = `list of tries: ${tries}`;
+document.querySelector("#history").textContent;
+
 function check() {
   const guess = document.querySelector("#guess");
   const message = document.querySelector("#hint");
@@ -21,8 +22,9 @@ function check() {
     message.textContent = `Вітаю! Ви вгадали число ${secret} за ${tries} спроб.`;
     message.classList.add("win");
   }
-  document.querySelector("#history").textContent +=
-    `\n${value} → ${message.textContent}`;
+  const li = document.createElement("li");
+  li.textContent = "50 → Менше";
+  list.append(li);
 }
 
 document.querySelector("#check").addEventListener("click", check);
