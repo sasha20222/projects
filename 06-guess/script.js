@@ -12,5 +12,5 @@ function check() {
     message.textContent = `Вітаю! Ви вгадали число ${secret} за ${tries} спроб.`;
     message.classList.add("win");
   }
-  document.querySelector("#check").addEventListener("click", check);
 }
+document.querySelector("#check").addEventListener("click", check);
