@@ -27,11 +27,12 @@ let hilka = [
 ];
 hilka.push({ name: "Нове зілля", price: 20, heal: 40 });
 function zbir() {
-  let text = "";
+  document.querySelector("#shop").innerHTML = "";
   for (let v of hilka) {
-    text += `${v.name} — ${v.price} монет\n`;
+    const li = document.createElement("li");
+    li.textContent = `${v.name} — ${v.price} монет`;
+    document.querySelector("#shop").append(li);
   }
-  alert(text);
 }
 function buy(k) {
   let item = hilka[k]; // беремо картку під номером k
