@@ -44,6 +44,15 @@ function buy(k) {
     alert("Не вистачає монет"); // ні: нічого не міняємо
   }
 }
+function buy0() {
+  buy(0);
+}
+function buy1() {
+  buy(1);
+}
+function buy2() {
+  buy(2);
+}
 let moderi = [
   { name: "btnep", hp: 899 },
   { name: "pikachy", hp: 999 },
@@ -173,7 +182,6 @@ document.querySelector("#hit").addEventListener("click", hit);
 document.querySelector("#strongHit").addEventListener("click", strongHit);
 document.querySelector("#shield").addEventListener("click", shield);
 document.querySelector("#ready").addEventListener("click", ready);
-document.querySelector("#buy2").addEventListener("click", buy2);
 document.querySelector("#biy").addEventListener("click", biy);
 document.querySelector("#teach").addEventListener("click", teach);
 document.querySelector("#combo").addEventListener("click", combo);
@@ -183,3 +191,5 @@ document.querySelector("#wave").addEventListener("click", wave);
 document.querySelector("#zbir").addEventListener("click", zbir);
 document.querySelector("#buy0").addEventListener("click", buy0);
 document.querySelector("#buy1").addEventListener("click", buy1);
+document.querySelector("#buy2").addEventListener("click", buy2);
+document.querySelector("#levelUp").addEventListener("click", levelUp);
