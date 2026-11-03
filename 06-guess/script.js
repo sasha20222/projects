@@ -24,7 +24,7 @@ function check() {
   }
   const li = document.createElement("li");
   li.textContent = value + " → " + message.textContent;
-  li.append(li);
+  list.append(li);
 }
 
 document.querySelector("#check").addEventListener("click", check);
