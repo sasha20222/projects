@@ -1,6 +1,6 @@
 let secret = Math.floor(Math.random() * 100) + 1;
 let tries = 0;
-
+document.querySelector("#history").textContent = `list of tries: ${tries}`;
 function check() {
   const guess = document.querySelector("#guess");
   const message = document.querySelector("#hint");
@@ -21,6 +21,8 @@ function check() {
     message.textContent = `Вітаю! Ви вгадали число ${secret} за ${tries} спроб.`;
     message.classList.add("win");
   }
+  document.querySelector("#history").textContent +=
+    `\n${value} → ${message.textContent}`;
 }
 
 document.querySelector("#check").addEventListener("click", check);
@@ -31,6 +33,7 @@ function reset() {
   const message = document.querySelector("#hint");
   message.textContent = "Введіть число від 1 до 100";
   message.classList.remove("win");
+  list.inerHTML = "";
 }
 
 document.querySelector("#new-game").addEventListener("click", reset);
