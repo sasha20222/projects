@@ -24,7 +24,7 @@ function check() {
   }
   const li = document.createElement("li");
   li.textContent = value + " → " + message.textContent;
-  list.append(li);
+  li.append(li);
 }
 
 document.querySelector("#check").addEventListener("click", check);
@@ -35,7 +35,7 @@ function reset() {
   const message = document.querySelector("#hint");
   message.textContent = "Введіть число від 1 до 100";
   message.classList.remove("win");
-  list.inerHTML = "";
+  li.inerHTML = "";
 }
 
 document.querySelector("#new-game").addEventListener("click", reset);
