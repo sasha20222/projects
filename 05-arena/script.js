@@ -40,10 +40,16 @@ function buy(k) {
     // вистачає монет?
     coins -= item.price; // так: мінус ціна
     boss.hp += item.heal;
+    if (item.price <= coins) {
+      li.classList.add("cheap");
+    } else {
+      li.classList.add("expensive");
+    }
     alert(`Купив ${item.name}! Монет: ${coins}`);
   } else {
     alert("Не вистачає монет"); // ні: нічого не міняємо
   }
+  zbir();
 }
 function buy0() {
   buy(0);

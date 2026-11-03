@@ -6,7 +6,7 @@ function check() {
   const guess = document.querySelector("#guess");
   const message = document.querySelector("#hint");
   const value = Number(guess.value);
-
+  const li = document.createElement("li");
   if (guess.value === "" || Number.isNaN(value) || value < 1 || value > 100) {
     message.textContent = "Будь ласка, введіть число від 1 до 100.";
     return;
@@ -16,13 +16,15 @@ function check() {
 
   if (value < secret) {
     message.textContent = `Спроб ${tries}. Число більше.`;
+    message.classList.add("up");
   } else if (value > secret) {
     message.textContent = `Спроб ${tries}. Число менше.`;
+    message.classList.add("down");
   } else {
     message.textContent = `Вітаю! Ви вгадали число ${secret} за ${tries} спроб.`;
     message.classList.add("win");
   }
-  const li = document.createElement("li");
+
   li.textContent = value + " → " + message.textContent;
   list.append(li);
 }
