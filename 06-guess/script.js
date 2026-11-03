@@ -23,7 +23,7 @@ function check() {
     message.classList.add("win");
   }
   const li = document.createElement("li");
-  li.textContent = "50 → Менше";
+  li.textContent = value + " → " + message.textContent;
   list.append(li);
 }
 
