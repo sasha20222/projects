@@ -100,6 +100,7 @@ function banseco(hp, sila) {
 }
 
 function hit() {
+  console.log("удар");
   boss.hp = banseco(boss.hp, upgrade(myLvl));
   if (boss.hp === 0) {
     alert("Перемога! 🏆");
@@ -200,3 +201,4 @@ document.querySelector("#buy0").addEventListener("click", buy0);
 document.querySelector("#buy1").addEventListener("click", buy1);
 document.querySelector("#buy2").addEventListener("click", buy2);
 document.querySelector("#levelUp").addEventListener("click", levelUp);
+console.log("Арена готова!");
