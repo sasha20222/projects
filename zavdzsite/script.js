@@ -1,6 +1,9 @@
-let price = 10;
-let coins = 1;
-for (let i = 0; i < price; i++, coins * 2) [i];
-{
-  console.log(`Рівень ${price}: ${(price *= coins)} монет`);
+const log = document.querySelector("#log");
+let i = 0;
+function wave() {
+  const li = document.createElement("li");
+  i++;
+  li.textContent = "Удар" + i;
+  log.append(li);
 }
+document.querySelector("#hit").addEventListener("click", wave);

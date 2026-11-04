@@ -31,6 +31,11 @@ function zbir() {
   for (let v of hilka) {
     const li = document.createElement("li");
     li.textContent = `${v.name} — ${v.price} монет`;
+    if (v.price <= coins) {
+      li.classList.add("cheap");
+    } else {
+      li.classList.add("expensive");
+    }
     document.querySelector("#shop").append(li);
   }
 }
@@ -40,11 +45,7 @@ function buy(k) {
     // вистачає монет?
     coins -= item.price; // так: мінус ціна
     boss.hp += item.heal;
-    if (item.price <= coins) {
-      li.classList.add("cheap");
-    } else {
-      li.classList.add("expensive");
-    }
+
     alert(`Купив ${item.name}! Монет: ${coins}`);
   } else {
     alert("Не вистачає монет"); // ні: нічого не міняємо
