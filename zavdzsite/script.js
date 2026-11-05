@@ -1,9 +1,14 @@
-const log = document.querySelector("#log");
-let i = 0;
-function wave() {
-  const li = document.createElement("li");
-  i++;
-  li.textContent = "Удар" + i;
-  log.append(li);
+let coins = 100;
+
+function bet() {
+ const value = Number(document.querySelector('#coins').value);
+  const msg = document.querySelector('#msg');
+  if (value < 1 || value > 100|| Number.isNaN(value) ) {
+    msg.textContent = 'Не можна'; 
+    return;
+  }
+  coins -= value;
+  document.querySelector('#coins').textContent = coins;
 }
-document.querySelector("#hit").addEventListener("click", wave);
+
+document.querySelector('#go').addEventListener('click', bet);

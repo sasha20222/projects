@@ -16,10 +16,10 @@ function check() {
 
   if (value < secret) {
     message.textContent = `Спроб ${tries}. Число більше.`;
-    message.classList.add("up");
+    li.classList.add("up");
   } else if (value > secret) {
     message.textContent = `Спроб ${tries}. Число менше.`;
-    message.classList.add("down");
+    li.classList.add("down");
   } else {
     message.textContent = `Вітаю! Ви вгадали число ${secret} за ${tries} спроб.`;
     message.classList.add("win");
