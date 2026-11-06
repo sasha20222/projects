@@ -204,6 +204,7 @@ document.querySelector("#buy2").addEventListener("click", buy2);
 document.querySelector("#levelUp").addEventListener("click", levelUp);
 console.log("Арена готова!");
 function keys(event) {
+  if (event.target.tagName === "INPUT") return;
   if ("1" === event.key) {
     hit();
   } else if ("2" === event.key) {

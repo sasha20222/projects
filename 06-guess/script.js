@@ -41,3 +41,9 @@ function reset() {
 }
 
 document.querySelector("#new-game").addEventListener("click", reset);
+function handleKeyPress(event) {
+  if (event.key === "Enter") {
+    check();
+  }
+}
+document.addEventListener("keydown", handleKeyPress);
