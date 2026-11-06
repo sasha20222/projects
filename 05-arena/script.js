@@ -203,3 +203,13 @@ document.querySelector("#buy1").addEventListener("click", buy1);
 document.querySelector("#buy2").addEventListener("click", buy2);
 document.querySelector("#levelUp").addEventListener("click", levelUp);
 console.log("Арена готова!");
+function keys(event) {
+  if ("1" === event.key) {
+    hit();
+  } else if ("2" === event.key) {
+    strongHit();
+  } else if ("3" === event.key) {
+    shield();
+  }
+}
+document.addEventListener("keydown", keys);
