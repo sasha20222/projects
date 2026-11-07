@@ -171,7 +171,8 @@ function ready() {
 }
 
 function shield() {
-  document.querySelector("img").classList.toggle("shield");
+  document.querySelector("img").classList.add("shield");
+  setTimeout(shieldOf, 3000);
 }
 
 function showBoss() {
@@ -227,3 +228,6 @@ function poison() {
   alert("Отрута! Відновлення здоров'я боса зупинено!");
 }
 document.querySelector("#poison").addEventListener("click", poison);
+function shieldOf() {
+  document.querySelector("img").classList.remove("shield");
+}

@@ -1,5 +1,14 @@
 let secret = Math.floor(Math.random() * 100) + 1;
 let tries = 0;
+let sec = 0;
+const clock = document.querySelector("#clock");
+
+function updateClock() {
+  sec += 1;
+  clock.textContent = "⏱️ " + sec + " с";
+}
+
+let clockTimer = setInterval(updateClock, 1000);
 const list = document.querySelector("#history");
 
 function check() {
@@ -32,8 +41,10 @@ function check() {
 document.querySelector("#check").addEventListener("click", check);
 
 function reset() {
-  secret = Math.floor(Math.random() * 100) + 1;
-  tries = 0;
+  clearInterval(clockTimer);
+  sec = 0;
+  clock.textContent = "⏱️ 0 с";
+  clockTimer = setInterval(updateClock, 1000);
   const message = document.querySelector("#hint");
   message.textContent = "Введіть число від 1 до 100";
   message.classList.remove("win");
