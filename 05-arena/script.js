@@ -218,8 +218,8 @@ function heal() {
   boss.hp += 100;
   if (boss.hp > 25000) {
     boss.hp = 25000;
-    showBoss();
   }
+  showBoss();
 }
 healTimer = setInterval(heal, 2000);
 function poison() {
