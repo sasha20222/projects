@@ -216,7 +216,7 @@ function keys(event) {
 document.addEventListener("keydown", keys);
 function heal() {
   boss.hp += 100;
-  if (boss.hp < 25000) {
+  if (boss.hp > 25000) {
     boss.hp = 25000;
     showBoss();
   }
