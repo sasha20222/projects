@@ -1,6 +1,34 @@
+let questions = [
+  {
+    question: "Як звали першу дінастію Китаю?",
+    options: ["Чінгисхан", "Цін", "Шін"],
+    correct: 0,
+  },
+  {
+    question: "Яка столиця Франції?",
+    options: ["Берлін", "Париж", "Мадрид"],
+    correct: 1,
+  },
+  {
+    question: "Яка планета найбільша в Сонячній системі?",
+    options: ["Земля", "Юпітер", "Сатурн"],
+    correct: 1,
+  },
+  {
+    question: "Скільки уроків у 7б класі?побег не рахуємо",
+    options: ["5", "6", "7"],
+    correct: 1,
+  },
+  {
+    question: "Яка столиця України?",
+    options: ["Київ", "Львів", "Одеса"],
+    correct: 0,
+  },
+];
+
 let score = 0;
-rightBtn = document.getElementById("right");
-wrongBtn = document.getElementById("wrong");
+const rightBtn = document.getElementById("right");
+const wrongBtn = document.getElementById("wrong");
 function right() {
   let result = document.getElementById("result");
   score += 1;
