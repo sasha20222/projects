@@ -1,0 +1,16 @@
+.right {
+  background-color: lightgreen;
+}
+.wrong {
+  background-color: red;
+}
+button {
+  background-color: lightblue;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+#questions {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
