@@ -1,6 +1,16 @@
-function checkAnswer() {
-  const selectedOption = document.querySelector('input[name="option"]:checked');
-  const resultElement = document.getElementById("result");
+let score = 0;
+
+function right() {
+  let result = document.getElementById("result");
   score += 1;
   result.textContent = "Вірно! Ваш рахунок: " + score;
+  result.classList.add("right");
 }
+function wrong() {
+  let result = document.getElementById("result");
+  score -= 1;
+  result.textContent = "Невірно! Ваш рахунок: " + score;
+  result.classList.add("wrong");
+}
+rightBtn.addEventListener("click", right);
+wrongBtn.addEventListener("click", wrong);
