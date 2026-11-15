@@ -39,11 +39,14 @@ let currentQuestion = 0;
 let score = 0;
 let questionEl = document.querySelector("#question");
 function showQuestion() {
-  let question = questions[currentQuestion];
   questionEl.textContent = questions[currentQuestion].text;
+  document.querySelector("#option1").textContent = questions[currentQuestion].a;
+  document.querySelector("#option2").textContent = questions[currentQuestion].b;
+  document.querySelector("#option3").textContent = questions[currentQuestion].c;
 }
+
 document.querySelector("#next").addEventListener("click", nextQuestion);
 function nextQuestion() {
   currentQuestion += 1;
+  showQuestion();
 }
-showQuestion();
