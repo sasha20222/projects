@@ -1,13 +1,6 @@
-function checkAnswer(selectedButton, correctAnswer) {
-  const buttons = selectedButton.parentElement.querySelectorAll("button");
-  buttons.forEach((button) => {
-    if (button === right) {
-      if (selectedButton.textContent === correctAnswer) {
-        selectedButton.classList.add("right");
-      } else {
-        selectedButton.classList.add("wrong");
-      }
-    }
-    score.textContent = `Рахунок: ${scoreValue}`;
-  });
+function checkAnswer() {
+  const selectedOption = document.querySelector('input[name="option"]:checked');
+  const resultElement = document.getElementById("result");
+  score += 1;
+  result.textContent = "Вірно! Ваш рахунок: " + score;
 }
