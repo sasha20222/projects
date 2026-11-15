@@ -40,4 +40,5 @@ function showQuestion() {
 }
 function nextQuestion() {
   currentQuestion++;
+  showQuestion();
 }
