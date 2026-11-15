@@ -39,6 +39,6 @@ function showQuestion() {
   let question = questions[currentQuestion];
 }
 function nextQuestion() {
-  currentQuestion++;
+  currentQuestion += 1;
   showQuestion();
 }
