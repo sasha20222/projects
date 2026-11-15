@@ -1,5 +1,6 @@
 let score = 0;
-
+rightBtn = document.getElementById("right");
+wrongBtn = document.getElementById("wrong");
 function right() {
   let result = document.getElementById("result");
   score += 1;
