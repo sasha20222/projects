@@ -45,6 +45,5 @@ function showQuestion() {
 document.querySelector("#next").addEventListener("click", nextQuestion);
 function nextQuestion() {
   currentQuestion += 1;
-
-  showQuestion();
 }
+showQuestion();
