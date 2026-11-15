@@ -1,27 +1,43 @@
+let questions = [
+  {
+    text: "Як звали першу династію Китаю?",
+    a: ["Чингісхан", "Цінь", "Шін"],
+    right: 1,
+  },
+  {
+    text: "Яка столиця Франції?",
+    a: "Берлін",
+    b: "Париж",
+    c: "Мадрид",
+    right: 1,
+  },
+  {
+    text: "Яка планета найбільша в Сонячній системі?",
+    a: "Земля",
+    b: "Юпітер",
+    c: "Сатурн",
+    right: 1,
+  },
+  {
+    text: "Скільки уроків у 7б класі? (побег не рахуємо)",
+    a: "5",
+    b: "6",
+    c: "7",
+    right: 1,
+  },
+  {
+    text: "Яка столиця України?",
+    a: "Київ",
+    b: "Львів",
+    c: "Одеса",
+    right: 0,
+  },
+];
+let currentQuestion = 0;
 let score = 0;
-let result = document.getElementById("result");
-let scoreText = document.getElementById("score");
-
-let rightBtns = document.querySelectorAll(".right-btn");
-let wrongBtns = document.querySelectorAll(".wrong-btn");
-
-function right(event) {
-  score += 1;
-  scoreText.textContent = "Рахунок: " + score;
-  result.textContent = "✔";
-  event.target.classList.add("right");
+function showQuestion() {
+  let question = questions[currentQuestion];
 }
-
-function wrong(event) {
-  scoreText.textContent = "Рахунок: " + score;
-  result.textContent = "✘";
-  event.target.classList.add("wrong");
+function nextQuestion() {
+  currentQuestion++;
 }
-
-rightBtns.forEach(function (btn) {
-  btn.addEventListener("click", right);
-});
-
-wrongBtns.forEach(function (btn) {
-  btn.addEventListener("click", wrong);
-});
