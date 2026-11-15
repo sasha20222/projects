@@ -37,6 +37,7 @@ let questions = [
 ];
 let currentQuestion = 0;
 let score = 0;
+let questionEl = document.querySelector("#question");
 function showQuestion() {
   let question = questions[currentQuestion];
   questionEl.textContent = questions[currentQuestion].text;
