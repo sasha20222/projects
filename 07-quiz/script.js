@@ -38,6 +38,7 @@ let score = 0;
 function showQuestion() {
   let question = questions[currentQuestion];
 }
+document.querySelector("#next").addEventListener("click", nextQuestion);
 function nextQuestion() {
   currentQuestion += 1;
   showQuestion();
