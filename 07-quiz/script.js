@@ -1,7 +1,9 @@
 let questions = [
   {
     text: "Як звали першу династію Китаю?",
-    a: ["Чингісхан", "Цінь", "Шін"],
+    a: "Чингісхан",
+    b: "Цінь",
+    c: "Шін",
     right: 1,
   },
   {
@@ -37,9 +39,11 @@ let currentQuestion = 0;
 let score = 0;
 function showQuestion() {
   let question = questions[currentQuestion];
+  questionEl.textContent = questions[currentQuestion].text;
 }
 document.querySelector("#next").addEventListener("click", nextQuestion);
 function nextQuestion() {
   currentQuestion += 1;
+
   showQuestion();
 }
